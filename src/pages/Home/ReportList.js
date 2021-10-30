@@ -29,7 +29,6 @@ const ReportList = (props) => {
     return data.map((item) => {
       return (
         <Grid
-          // style={{padding: '16px', border: 'solid 1px #e3e3e3', borderRadius: '4px', margin: '8px'}}
           item
           key={item.id}
           xs={12}

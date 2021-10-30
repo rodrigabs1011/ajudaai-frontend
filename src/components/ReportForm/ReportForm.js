@@ -17,30 +17,30 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "calc(100vh - 200px)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: 'center',
-    position: 'relative',
+    justifyContent: "center",
+    position: "relative",
   },
   wizardTop: {
-    marginTop: '-21px',
-    position: 'absolute',
-    top: '34px',
-    left: '0',
-    right: '0',
-    transform: 'translateY(-50%)',
+    marginTop: "-21px",
+    position: "absolute",
+    top: "34px",
+    left: "0",
+    right: "0",
+    transform: "translateY(-50%)",
   },
   form: {
     paddingTop: "34px",
   },
   actionsWrapper: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginTop: theme.spacing(2),
   },
   motivationalGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   motivationalWrapper: {
     display: "flex",
@@ -68,14 +68,11 @@ const ReportForm = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className={classes.root}>
-        <Box className={classes.wizardTop} >
+        <Box className={classes.wizardTop}>
           <WizardSteps steps={2} current={0} label={wizardLabel} />
         </Box>
         <form className={classes.form}>
-          <Typography
-            variant="h6"
-            color="textSecondary"
-          >
+          <Typography variant="h6" color="textSecondary">
             Conte-nos o que você encontrou!
           </Typography>
           <TextField
@@ -84,24 +81,26 @@ const ReportForm = () => {
             variant="outlined"
             margin="dense"
             fullWidth
-
             // value={}
             // onChange={}
           />
 
           <Box className={classes.actionsWrapper}>
-            <Button variant="outlined" color="primary">
-              Cancelar
-            </Button>
-
             <Button variant="contained" color="primary">
-              Postar
+              Confirmar
             </Button>
           </Box>
         </form>
       </Grid>
       <Hidden smDown>
-        <Grid item sm={6} md={6} lg={6} xl={6} className={classes.motivationalGrid}>
+        <Grid
+          item
+          sm={6}
+          md={6}
+          lg={6}
+          xl={6}
+          className={classes.motivationalGrid}
+        >
           <Box className={classes.motivationalWrapper}>
             <img
               src={requestFormIllustration}
