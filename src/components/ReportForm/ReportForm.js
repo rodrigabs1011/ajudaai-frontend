@@ -64,32 +64,38 @@ const ReportForm = () => {
   const classes = useStyles();
   const { reportFormVisible, setReportFormVisible } = useContext(GlobalContext);
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
+  const [wizardStep, setWizardStep] = useState(0);
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className={classes.root}>
         <Box className={classes.wizardTop}>
-          <WizardSteps steps={2} current={0} label={wizardLabel} />
+          <WizardSteps steps={2} current={wizardStep} label={wizardLabel} />
         </Box>
         <form className={classes.form}>
-          <Typography variant="h6" color="textSecondary">
-            Conte-nos o que você encontrou!
-          </Typography>
-          <TextField
-            id="description"
-            label="Descrição"
-            variant="outlined"
-            margin="dense"
-            fullWidth
-            // value={}
-            // onChange={}
-          />
+          {wizardStep === 0 ? (
+            <>
+              <Typography variant="h6" color="textSecondary">
+                Conte-nos o que você encontrou!
+              </Typography>
+              <TextField
+                id="description"
+                label="Descrição"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                // value={}
+                // onChange={}
+              />
 
-          <Box className={classes.actionsWrapper}>
-            <Button variant="contained" color="primary">
-              Confirmar
-            </Button>
-          </Box>
+              <Box className={classes.actionsWrapper}>
+                <Button variant="contained" color="primary" onClick={() => {setWizardStep(1); setWizardLabel("Resumo")}}>
+                  Confirmar
+                </Button>
+              </Box>
+            </>
+          ) : null}
+          {wizardStep === 1 ? "Step 2" : null}
         </form>
       </Grid>
       <Hidden smDown>
