@@ -28,17 +28,18 @@ const NavBar = () => {
     setReportFormVisible(true);
   };
 
-  let navLinks = (
-    <>
-      <li>
-        <Link className={classes.navItem} to="/">
-          {" "}
-          {/* TODO: to="/about" */}
-          Inicio
-        </Link>
-      </li>
-    </>
-  );
+  let navLinks = (<></>)
+  // (
+  //   <>
+  //     <li>
+  //       <Link className={classes.navItem} to="/">
+  //         {/* TODO: to="/about" */}
+  //         Inicio
+  //       </Link>
+  //     </li>
+  //   </>
+  // );
+
   if (isAuthenticated) {
     navLinks = (
       <>

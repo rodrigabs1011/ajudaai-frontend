@@ -4,14 +4,14 @@ import { defaultAnimDuration } from "../../utils/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.background.default,
+    background: theme.palette.primary.main,
     width: '100%',
     position: 'fixed',
     zIndex: 16,
     boxShadow: '0px 4px 8px 0px #0000001F',
   },
   fixedHeader: {
-    background: theme.palette.background.default,
+    background: theme.palette.primary.main,
     left: 0,
     right: 0,
     transition: `all ${defaultAnimDuration}`,
@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
     height: '20px',
   },
   brandText: {
-    color: theme.palette.primary.main,
+    color: theme.palette.background.default,
     letterSpacing: '.15px',
     fontSize: '20px',
-    fontWeight: '500',
+    fontWeight: 500,
     marginRight: theme.spacing(1),
   },
   navList: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   navItem: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.background.default,
     margin: `0 ${theme.spacing(1)}px`,
   },
   row: {

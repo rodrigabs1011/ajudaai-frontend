@@ -8,15 +8,39 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     padding: `0 ${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
+    [theme.breakpoints.down('xs')]: {
+      padding: 0,
+    },
+    marginBottom: theme.spacing(3),
+    width: '100%',
   },
-  cationWrapper: {
+  captionWrapper: {
     display: "flex",
-    alignItems: "centeer",
-    marginTop: theme.spacing(2)
+    alignItems: "center",
+    marginTop: theme.spacing(1),
   },
   captionIcon: {
     color: theme.palette.text.secondary,
+    marginLeft: theme.spacing(1),
     height: 20,
+  },
+  relevanceWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  relevance: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: `solid 1px ${theme.palette.text.disabled}`,
+    borderRadius: '20px',
+    maxHeight: '38px',
+  },
+  relevanceIcon: {
+    fontSize: '16px',
   },
   marginBottom: {
     marginBottom: theme.spacing(2),
