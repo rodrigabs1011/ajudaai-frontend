@@ -1,36 +1,36 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   pageTitle: {
-    fontSize: '34px',
-    fontWeight: 'normal',
+    fontSize: "34px",
+    fontWeight: "normal",
     color: theme.palette.text.primary,
   },
-  tribeName: {
-    fontSize: '20px',
-    fontWeight: 500,
-    color: theme.palette.primary.main,
-    marginBottom: theme.spacing(2),
+  listItem: {
+    padding: `0 ${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
   },
-  squadList: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  cationWrapper: {
+    display: "flex",
+    alignItems: "centeer",
+    marginTop: theme.spacing(2)
   },
-  squadItem: {
-    marginRight: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+  captionIcon: {
+    color: theme.palette.text.secondary,
+    height: 20,
   },
   marginBottom: {
     marginBottom: theme.spacing(2),
   },
   emptyText: {
-    color: '#666666',
+    color: "#666666",
+  },
+  errorMessage: {
+    marginBottom: theme.spacing(3),
   },
   row: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: '13px',
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: "13px",
   },
 }));
 

@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
     height: '20px',
   },
   brandText: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.secondary,
     letterSpacing: '.15px',
     fontSize: '20px',
-    fontWeight: 500,
+    fontWeight: '500',
     marginRight: theme.spacing(1),
   },
   navList: {

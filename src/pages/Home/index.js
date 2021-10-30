@@ -12,6 +12,8 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
 
+import serverDown from "../../assets/serverDown.svg";
+
 const Home = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,20 +42,23 @@ const Home = () => {
   return (
     <>
       <NavBar />
-      {JSON.stringify(reports)}
       <main>
-        {/* <Grid container className={classes.marginBottom}>
-          <Typography variant="h2" className={classes.pageTitle}>
-            Últimos ajudaaís!
-          </Typography>
-        </Grid> */}
         {reportFormVisible ? (
           <ReportForm />
         ) : (
           <>
-            <Grid container>
+            <Grid container direction="column" alignItems="center">
               <Grid item>
-                <ErrorMsg error={error} className={classes.marginBottom} />
+                <ErrorMsg error={error} className={classes.errorMessage} />
+              </Grid>
+              <Grid item sm={12} lg={6} xl={6}>
+                {error ? (
+                  <img
+                    src={serverDown}
+                    alt="Erro ao comunicar-se com o servidor."
+                    width="100%"
+                  />
+                ) : null}
               </Grid>
             </Grid>
             <Grid container className={classes.marginBottom}>

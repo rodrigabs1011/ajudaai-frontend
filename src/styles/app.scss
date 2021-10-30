@@ -23,3 +23,9 @@ a {
 main {
   padding: 144px 89px 55px 89px;
 }
+
+@media screen and (max-width: 600px) {
+  main {
+    padding: 144px 55px 55px 55px;
+  }
+}
