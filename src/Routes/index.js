@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import PrivateRoute from "../components/PrivateRoute";
 import Signin from "../pages/Signin";
+import ReportDetail from "../pages/ReportDetail";
 import SquadDetail from "../pages/SquadDetail";
 import TribeDetail from "../pages/TribeDetail";
 import TribeList from "../pages/TribeList";
@@ -19,6 +20,7 @@ export default class Routes extends Component {
           <Route exact path="/about/" component={About} />
           <Route exact path="/signin/" component={Signin} />
           <Route exact path="/" component={Home} />
+          <Route exact path="/reports/:id/" component={ReportDetail} />
           {/* <Route exact path="/">
             <PrivateRoute component={Home}></PrivateRoute>
           </Route> */}

@@ -21,6 +21,11 @@ export class ReportClient {
     return data;
   }
 
+  async getReportById(id) {
+    const { data } = await this.apiRef.get(`/reports/${id}/`);
+    return data;
+  }
+
   // async editSquad(id, payload) {
   //   const { data } = await this.apiRef.patch(`${BASE_API_URL}/api/squads/${id}/`, payload);
   //   return data;

@@ -1,0 +1,82 @@
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+
+import NavBar from "../../components/Navbar";
+import ErrorMsg from "../../components/ErrorMsg";
+import ReportForm from "../../components/ReportForm";
+
+import ReportClient from "../../services/reports";
+import { GlobalContext } from "../../providers/GlobalProvider";
+
+import useStyles from "./styles";
+
+import serverDown from "../../assets/serverDown.svg";
+
+
+const ReportDetail = () => {
+  const { id } = useParams();
+  const [report, setReport] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+
+  const { reportFormVisible } = useContext(GlobalContext);
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    getReports(); // eslint-disable-next-line
+  }, []);
+
+  const getReports = async () => {
+    try {
+      setLoading(true);
+      const report = await ReportClient.getReportById(id);
+      if (report) setReport(report);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <NavBar />
+      <main>
+        {reportFormVisible ? (
+          <ReportForm />
+        ) : (
+          <>
+            <Grid container direction="column" alignItems="center">
+              <Grid item>
+                <ErrorMsg error={error} className={classes.errorMessage} />
+              </Grid>
+              <Grid item sm={12} lg={6} xl={6}>
+                {error ? (
+                  <img
+                    src={serverDown}
+                    alt="Erro ao comunicar-se com o servidor."
+                    width="100%"
+                  />
+                ) : null}
+              </Grid>
+            </Grid>
+            <Grid container className={classes.marginBottom}>
+              <Typography variant="h6" color="textSecondary">Title</Typography>
+              {JSON.stringify(report)}
+            </Grid>
+            <Divider />
+            <Grid container className={classes.marginBottom}>
+             <Typography variant="h6" color="textSecondary">Comentários</Typography>
+            </Grid>
+          </>
+        )}
+      </main>
+    </>
+  );
+};
+
+export default ReportDetail;
