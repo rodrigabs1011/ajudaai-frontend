@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import About from "../pages/About";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
-import PrivateRoute from "../components/PrivateRoute";
 import Signin from "../pages/Signin";
 import ReportDetail from "../pages/ReportDetail";
 import ServerError from "../pages/ServerError";

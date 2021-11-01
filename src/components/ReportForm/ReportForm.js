@@ -6,14 +6,12 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PublishIcon from "@material-ui/icons/Publish";
 
-import ReportItem from "../ReportItem";
 import { GlobalContext } from "../../providers/GlobalProvider";
 import ReportService from "../../services/reports";
 import WizardSteps from "../WizardSteps";
@@ -188,7 +186,7 @@ const FormComplementar = ({
 
 const ReportForm = () => {
   const classes = useStyles();
-  const { reportFormVisible, setReportFormVisible } = useContext(GlobalContext);
+  const { setReportFormVisible } = useContext(GlobalContext);
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
   const [wizardStep, setWizardStep] = useState(0);
 
@@ -233,7 +231,7 @@ const ReportForm = () => {
       }
     } else {
       setFormImageError("Apenas um arquivo de imagem permitido!");
-    }
+    }  // eslint-disable-next-line
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

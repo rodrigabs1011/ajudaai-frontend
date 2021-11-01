@@ -1,11 +1,7 @@
-import React, { useState, useContext, useCallback } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDropzone } from "react-dropzone";
-import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import SmsIcon from "@material-ui/icons/Sms";
@@ -13,10 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 
-import { GlobalContext } from "../../providers/GlobalProvider";
-import ReportService from "../../services/reports";
-import WizardSteps from "../WizardSteps";
-import requestFormIllustration from "../../assets/requestFormIllustration.svg";
 import useStyles from "./styles";
 
 const ReportItem = ({item, }) => {

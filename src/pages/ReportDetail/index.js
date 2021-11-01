@@ -16,8 +16,6 @@ import useStyles from "./styles";
 
 import serverDown from "../../assets/serverDown.svg";
 
-
-
 const ReportDetail = () => {
   const { id } = useParams();
   const [report, setReport] = useState();
@@ -56,26 +54,45 @@ const ReportDetail = () => {
               <Grid item>
                 <ErrorMsg error={error} className={classes.errorMessage} />
               </Grid>
-              <Grid item sm={12} lg={6} xl={6}>
-                {error ? (
+              {error ? (
+                <Grid item sm={12} lg={6} xl={6}>
                   <img
                     src={serverDown}
                     alt="Erro ao comunicar-se com o servidor."
                     width="100%"
                   />
-                ) : null}
-              </Grid>
+                </Grid>
+              ) : null}
             </Grid>
-            <Grid container className={classes.marginBottom}>
-              <Typography variant="h6" color="textSecondary">Mussum Ipsum Dolor Met</Typography>
-            </Grid>
-            <Divider />
-            <Grid container direction="column" className={classes.comentaryRoot}>
-             <Typography variant="h6" color="textSecondary">Comentários</Typography>
-             <Box>
-               <Typography variant="body1" color="textSecondary">Comentary List!</Typography>
-             </Box>
-            </Grid>
+            {loading ? (
+              "Loading"
+            ) : (
+              <>
+                <Grid container className={classes.reportContent}>
+                  <Typography variant="h6" color="textSecondary">
+                    Mussum Ipsum Dolor Met
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary">
+                    {report.description}
+                  </Typography>
+                </Grid>
+                <Divider />
+                <Grid
+                  container
+                  direction="column"
+                  className={classes.comentaryRoot}
+                >
+                  <Typography variant="h6" color="textSecondary">
+                    Comentários
+                  </Typography>
+                  <Box>
+                    <Typography variant="body1" color="textSecondary">
+                      Comentary List!
+                    </Typography>
+                  </Box>
+                </Grid>
+              </>
+            )}
           </>
         )}
       </main>

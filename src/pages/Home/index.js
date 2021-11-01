@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 import NavBar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import ErrorMsg from "../../components/ErrorMsg";
 import ReportForm from "../../components/ReportForm";
 import ReportList from "./ReportList";
@@ -68,6 +68,7 @@ const Home = () => {
           </>
         )}
       </main>
+      <Footer />
     </>
   );
 };
