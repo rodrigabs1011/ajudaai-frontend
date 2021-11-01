@@ -7,9 +7,6 @@ import NotFound from "../pages/NotFound";
 import PrivateRoute from "../components/PrivateRoute";
 import Signin from "../pages/Signin";
 import ReportDetail from "../pages/ReportDetail";
-import SquadDetail from "../pages/SquadDetail";
-import TribeDetail from "../pages/TribeDetail";
-import TribeList from "../pages/TribeList";
 import ServerError from "../pages/ServerError";
 
 export default class Routes extends Component {
@@ -21,18 +18,6 @@ export default class Routes extends Component {
           <Route exact path="/signin/" component={Signin} />
           <Route exact path="/" component={Home} />
           <Route exact path="/reports/:id/" component={ReportDetail} />
-          {/* <Route exact path="/">
-            <PrivateRoute component={Home}></PrivateRoute>
-          </Route> */}
-          {/* <Route exact path="/tribes/:id/">
-            <PrivateRoute component={TribeDetail}></PrivateRoute>
-          </Route>
-          <Route exact path="/tribes/">
-            <PrivateRoute component={TribeList}></PrivateRoute>
-          </Route>
-          <Route exact path="/squads/:id/">
-            <PrivateRoute component={SquadDetail}></PrivateRoute>
-          </Route> */}
           <Route exact path="/500" component={ServerError} />
           <Route component={NotFound} />
         </Switch>

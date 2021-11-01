@@ -8,7 +8,7 @@ const axiosClient = axios.create({
   headers,
 });
 
-export class ReportClient {
+export class ReportService {
   constructor() {
     this.apiRef = axios.create({
       baseURL: `${BASE_API_URL}/ajudaai/v1`,
@@ -24,6 +24,13 @@ export class ReportClient {
   async getReportById(id) {
     const { data } = await this.apiRef.get(`/reports/${id}/`);
     return data;
+  }
+
+  async getSimilarReports(payload) {
+    // const { data } = await this.apiRef.get(`/reports/findRelated/?description=${payload.description}`);
+    // const { data } = await this.apiRef.post(`/reports/findRelated/`, payload);
+    const { data } = await this.apiRef.get(`/reports/`);
+    return data.slice(0, 3);
   }
 
   // async editSquad(id, payload) {
@@ -134,4 +141,4 @@ export {
 };
 
 
-export default new ReportClient();
+export default new ReportService();

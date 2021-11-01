@@ -1,16 +1,20 @@
 import React, { useState, useContext, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
+import ReportItem from "../ReportItem";
 import { GlobalContext } from "../../providers/GlobalProvider";
+import ReportService from "../../services/reports";
 import WizardSteps from "../WizardSteps";
-
 import requestFormIllustration from "../../assets/requestFormIllustration.svg";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,13 +63,110 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     maxWidth: "500px",
   },
+  similarReportList: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    width: '100%',
+    paddingTop: theme.spacing(1)
+  },
+  similarReportItem: {
+    padding: `${theme.spacing(1)}px 0`,
+    width: '100%',
+  },
+  similarHeadingDescription: {
+    display: "inline",
+    margin: "0 4px -4px 4px",
+  },
+  similarWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
 }));
+
+const FormComplementar = ({
+  similarReports,
+  similarReportsLoading,
+  similarReportsError,
+}) => {
+  const classes = useStyles();
+  return (
+    <>
+      {similarReports.length > 0 ? (
+        <Box className={classes.similarWrapper}>
+          <Typography variant="body1" color="textSecondary">
+            Se já foi publicado que tal somar esforços no mesmo post fazendo um
+            comentário ou dando um
+              <ThumbUpIcon
+                className={classes.similarHeadingDescription}
+                fontSize="small"
+              />
+            ?
+          </Typography>
+          <Box className={classes.similarReportList}>
+            {similarReports.map((item) => {
+              return (
+                <Link
+                  key={item.id}
+                  className={classes.similarReportItem}
+                  to={`/reports/${item.id}/`}
+                >
+                  <Typography variant="body1" color="primary">
+                    {item.name}
+                  </Typography>
+                  {/* <ReportItem item={item} className={classes.similarReportItem} /> */}
+                </Link>
+              );
+            })}
+          </Box>
+        </Box>
+      ) : (
+        <Box className={classes.motivationalWrapper}>
+          <img
+            src={requestFormIllustration}
+            alt="Imagem de uma mulher segurando coração inflável."
+            className={classes.motivationalImage}
+          />
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            className={classes.motivationalText}
+          >
+            Você pode postar algo que não está legal e assim contribui com a
+            solução!
+          </Typography>
+        </Box>
+      )}
+    </>
+  );
+};
 
 const ReportForm = () => {
   const classes = useStyles();
   const { reportFormVisible, setReportFormVisible } = useContext(GlobalContext);
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
   const [wizardStep, setWizardStep] = useState(0);
+
+  const [formData, setFormData] = useState();
+
+  const [similarReports, setSimilarReports] = useState([]);
+  const [similarReportsLoading, setSimilarReportsLoading] = useState([]);
+  const [similarReportsError, setSimilarReportsError] = useState([]);
+
+  const getSimilarReports = async () => {
+    try {
+      setSimilarReportsError(undefined);
+      setSimilarReportsLoading(true);
+      const reports = await ReportService.getSimilarReports(formData);
+      if (reports) setSimilarReports(reports);
+    } catch (e) {
+      setSimilarReportsError(e.message);
+    } finally {
+      setSimilarReportsLoading(false);
+    }
+  };
 
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
@@ -110,6 +211,7 @@ const ReportForm = () => {
                   onClick={() => {
                     setWizardStep(1);
                     setWizardLabel("A melhor Imagem");
+                    getSimilarReports();
                   }}
                 >
                   Próximo
@@ -122,12 +224,22 @@ const ReportForm = () => {
               <Typography variant="h6" color="textSecondary">
                 Você tem uma imagem?
               </Typography>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} style={{border: 'solid 1px'}} />
+              <div
+                {...getRootProps()}
+                style={{
+                  border: "solid 1px #0000001f",
+                  borderRadius: "4px",
+                  padding: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <input {...getInputProps()} />
                 {isDragActive ? (
-                  <p>Drop the files here ...</p>
+                  <p>Solte a imagem aqui!</p>
                 ) : (
-                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  <p>
+                    Clique para selecionar ou arraste e solte sua imagem aqui!
+                  </p>
                 )}
               </div>
               <Box className={classes.actionsWrapper}>
@@ -136,6 +248,7 @@ const ReportForm = () => {
                   color="primary"
                   onClick={() => {
                     setWizardStep(2);
+                    setSimilarReports([]);
                     setWizardLabel("Resumo");
                   }}
                 >
@@ -179,21 +292,20 @@ const ReportForm = () => {
           xl={6}
           className={classes.motivationalGrid}
         >
-          <Box className={classes.motivationalWrapper}>
-            <img
-              src={requestFormIllustration}
-              alt="Imagem de uma mulher segurando coração inflável."
-              className={classes.motivationalImage}
-            />
-            <Typography
-              variant="body1"
-              color="textSecondary"
-              className={classes.motivationalText}
-            >
-              Você pode postar algo que não está legal e assim contribui com a
-              solução!
-            </Typography>
-          </Box>
+          <FormComplementar
+            similarReports={similarReports}
+            similarReportsLoading={similarReportsLoading}
+            similarReportsError={similarReportsError}
+          />
+        </Grid>
+      </Hidden>
+      <Hidden smUp>
+        <Grid item xs={12} className={classes.motivationalGrid}>
+          <FormComplementar
+            similarReports={similarReports}
+            similarReportsLoading={similarReportsLoading}
+            similarReportsError={similarReportsError}
+          />
         </Grid>
       </Hidden>
     </Grid>

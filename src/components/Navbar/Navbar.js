@@ -67,9 +67,11 @@ const NavBar = () => {
               <IconButton onClick={closeReportForm}>
                 <ArrowBackIcon />
               </IconButton>
-              <Typography variant="h2" className={classes.brandText}>
-                AJUDA AÍ
-              </Typography>
+              <Link to="/" onClick={closeReportForm}>
+                <Typography variant="h2" className={classes.brandText}>
+                  AJUDA AÍ
+                </Typography>
+              </Link>
               <IconButton onClick={closeReportForm}>
                 <CloseIcon />
               </IconButton>

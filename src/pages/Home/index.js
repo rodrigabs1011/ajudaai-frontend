@@ -7,7 +7,7 @@ import ErrorMsg from "../../components/ErrorMsg";
 import ReportForm from "../../components/ReportForm";
 import ReportList from "./ReportList";
 
-import ReportClient from "../../services/reports";
+import ReportService from "../../services/reports";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
@@ -30,7 +30,7 @@ const Home = () => {
   const getReports = async () => {
     try {
       setLoading(true);
-      const reports = await ReportClient.getReports();
+      const reports = await ReportService.getReports();
       if (reports) setReports(reports);
     } catch (e) {
       setError(e.message);

@@ -52,13 +52,14 @@ const WizardSteps = ({ label, current, steps }) => {
       </Typography>
       <Box className={classes.stepsWrapper}>
         {Array.from(Array(steps).keys()).map((step) => {
+
           if (step < current) {
-            return <Box className={classes.previousStep}></Box>;
+            return <Box key={step} className={classes.previousStep}></Box>;
           }
           if (step === current) {
-            return <Box className={classes.currentStep}></Box>;
+            return <Box key={step} className={classes.currentStep}></Box>;
           }
-          return <Box className={classes.nextStep}></Box>;
+          return <Box key={step} className={classes.nextStep}></Box>;
         })}
       </Box>
     </Box>
