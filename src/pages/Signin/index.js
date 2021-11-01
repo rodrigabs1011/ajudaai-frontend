@@ -72,7 +72,7 @@ class Signin extends Component {
       <main>
         <div className="container color-gray-500">
           <div className="row flex justify-center">
-            <h2 className="color-gray-700 text-center">Entrar</h2>
+            <h2 className="color-gray-700 text-center">Entrar no Ajuda Aí</h2>
 
             <form className="flex flex-col justify-center"
               onSubmit={

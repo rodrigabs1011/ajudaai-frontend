@@ -140,9 +140,9 @@ const FormComplementar = ({
                   key={item.id}
                   className={classes.similarReportItem}
                   to={`/reports/${item.id}/`}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     window.open(`/reports/${item.id}/`);
-                    setReportFormVisible(false);
                   }}
                 >
                   <Typography
