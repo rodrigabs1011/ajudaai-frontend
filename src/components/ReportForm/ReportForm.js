@@ -10,12 +10,17 @@ import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import PublishIcon from "@material-ui/icons/Publish";
 
 import ReportItem from "../ReportItem";
 import { GlobalContext } from "../../providers/GlobalProvider";
 import ReportService from "../../services/reports";
 import WizardSteps from "../WizardSteps";
+import ErrorMsg from "../ErrorMsg";
 import requestFormIllustration from "../../assets/requestFormIllustration.svg";
+
+const labels = ["Informações Iniciais", "A melhor Imagem", "Resumo"];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,11 +46,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     marginTop: theme.spacing(2),
   },
+  marginRight: {
+    marginRight: theme.spacing(2),
+  },
   motivationalGrid: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    paddingRight: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
   },
   motivationalWrapper: {
     display: "flex",
@@ -63,26 +73,32 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     maxWidth: "500px",
   },
+  relatedItemsTitle: {
+    width: "100%",
+    textAlign: "center",
+  },
   similarReportList: {
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "flex-start",
-    width: '100%',
-    paddingTop: theme.spacing(1)
+    width: "100%",
+    paddingTop: theme.spacing(1),
   },
   similarReportItem: {
-    padding: `${theme.spacing(1)}px 0`,
-    width: '100%',
+    width: "100%",
   },
   similarHeadingDescription: {
     display: "inline",
     margin: "0 4px -4px 4px",
   },
+  relatedItemContent: {
+    margin: `${theme.spacing(2)}px 0`,
+  },
   similarWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
 }));
 
@@ -90,19 +106,31 @@ const FormComplementar = ({
   similarReports,
   similarReportsLoading,
   similarReportsError,
+  step,
+  setReportFormVisible,
 }) => {
   const classes = useStyles();
+
   return (
     <>
-      {similarReports.length > 0 ? (
+      <ErrorMsg error={similarReportsError} />
+
+      {similarReports.length > 0 && step === 1 ? (
         <Box className={classes.similarWrapper}>
+          <Typography
+            variant="h6"
+            color="textSecondary"
+            className={classes.relatedItemsTitle}
+          >
+            Dá uma olhada se seu ajuda aí já não foi postado!
+          </Typography>
           <Typography variant="body1" color="textSecondary">
             Se já foi publicado que tal somar esforços no mesmo post fazendo um
             comentário ou dando um
-              <ThumbUpIcon
-                className={classes.similarHeadingDescription}
-                fontSize="small"
-              />
+            <ThumbUpIcon
+              className={classes.similarHeadingDescription}
+              fontSize="small"
+            />
             ?
           </Typography>
           <Box className={classes.similarReportList}>
@@ -112,10 +140,19 @@ const FormComplementar = ({
                   key={item.id}
                   className={classes.similarReportItem}
                   to={`/reports/${item.id}/`}
+                  onClick={() => {
+                    window.open(`/reports/${item.id}/`);
+                    setReportFormVisible(false);
+                  }}
                 >
-                  <Typography variant="body1" color="primary">
+                  <Typography
+                    className={classes.relatedItemContent}
+                    variant="body1"
+                    color="primary"
+                  >
                     {item.name}
                   </Typography>
+                  <Divider />
                   {/* <ReportItem item={item} className={classes.similarReportItem} /> */}
                 </Link>
               );
@@ -123,21 +160,27 @@ const FormComplementar = ({
           </Box>
         </Box>
       ) : (
-        <Box className={classes.motivationalWrapper}>
-          <img
-            src={requestFormIllustration}
-            alt="Imagem de uma mulher segurando coração inflável."
-            className={classes.motivationalImage}
-          />
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            className={classes.motivationalText}
-          >
-            Você pode postar algo que não está legal e assim contribui com a
-            solução!
-          </Typography>
-        </Box>
+        <>
+          {similarReportsLoading ? (
+            <CircularProgress />
+          ) : (
+            <Box className={classes.motivationalWrapper}>
+              <img
+                src={requestFormIllustration}
+                alt="Imagem de uma mulher segurando coração inflável."
+                className={classes.motivationalImage}
+              />
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={classes.motivationalText}
+              >
+                Você pode postar algo que não está legal e assim contribui com a
+                solução!
+              </Typography>
+            </Box>
+          )}
+        </>
       )}
     </>
   );
@@ -149,10 +192,14 @@ const ReportForm = () => {
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
   const [wizardStep, setWizardStep] = useState(0);
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({
+    image: undefined,
+    description: "",
+  });
+  const [formImageError, setFormImageError] = useState();
 
   const [similarReports, setSimilarReports] = useState([]);
-  const [similarReportsLoading, setSimilarReportsLoading] = useState([]);
+  const [similarReportsLoading, setSimilarReportsLoading] = useState(false);
   const [similarReportsError, setSimilarReportsError] = useState([]);
 
   const getSimilarReports = async () => {
@@ -169,13 +216,30 @@ const ReportForm = () => {
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
+    setFormImageError(undefined);
+    if (acceptedFiles.length === 1) {
+      const fileName = acceptedFiles[0].name;
+      if (['svg', 'png', 'jpeg', 'jpg', 'gif'].includes(fileName.split('.').at(-1).toLowerCase())) {
+        const auxFormData = { ...formData };
+        auxFormData.image = acceptedFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          auxFormData.imageSrc = e.target.result;
+          setFormData(auxFormData);
+        };
+        reader.readAsDataURL(acceptedFiles[0]);
+      } else {
+        setFormImageError("Tipo de arquivo inválido");
+      }
+    } else {
+      setFormImageError("Apenas um arquivo de imagem permitido!");
+    }
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className={classes.root}>
+    <Grid container spacing={5}>
+      <Grid item xs={12} sm={6} md={6} lg={6} xl={6} className={classes.root}>
         <Box className={classes.wizardTop}>
           <WizardSteps steps={3} current={wizardStep} label={wizardLabel} />
         </Box>
@@ -210,7 +274,7 @@ const ReportForm = () => {
                   color="primary"
                   onClick={() => {
                     setWizardStep(1);
-                    setWizardLabel("A melhor Imagem");
+                    setWizardLabel(labels[1]);
                     getSimilarReports();
                   }}
                 >
@@ -224,15 +288,30 @@ const ReportForm = () => {
               <Typography variant="h6" color="textSecondary">
                 Você tem uma imagem?
               </Typography>
+              <ErrorMsg error={formImageError} />
               <div
                 {...getRootProps()}
                 style={{
                   border: "solid 1px #0000001f",
                   borderRadius: "4px",
-                  padding: "8px",
+                  padding: "16px 8px",
                   cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
+                {formData.imageSrc ? (
+                  <img
+                    width={100}
+                    src={formData.imageSrc}
+                    alt={formData.description}
+                  />
+                ) : (
+                  <Typography variant="caption" color="textSecondary">
+                    <PublishIcon fontSize="large" />
+                  </Typography>
+                )}
                 <input {...getInputProps()} />
                 {isDragActive ? (
                   <p>Solte a imagem aqui!</p>
@@ -244,15 +323,24 @@ const ReportForm = () => {
               </div>
               <Box className={classes.actionsWrapper}>
                 <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setWizardStep(0);
+                    setWizardLabel(labels[0]);
+                  }}
+                  className={classes.marginRight}
+                >
+                  Voltar
+                </Button>
+                <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
                     setWizardStep(2);
-                    setSimilarReports([]);
-                    setWizardLabel("Resumo");
+                    setWizardLabel(labels[2]);
                   }}
                 >
-                  Confirmar
+                  Próximo
                 </Button>
               </Box>
             </>
@@ -263,12 +351,22 @@ const ReportForm = () => {
                 Está tudo certo?
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                Título
+                Dummy Title Item!
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                Description
+                Mussum Ipsum dolor met!
               </Typography>
               <Box className={classes.actionsWrapper}>
+                <Button
+                  variant="outlined"
+                  className={classes.marginRight}
+                  onClick={() => {
+                    setWizardStep(1);
+                    setWizardLabel(labels[1]);
+                  }}
+                >
+                  Voltar
+                </Button>
                 <Button
                   variant="contained"
                   color="primary"
@@ -276,38 +374,30 @@ const ReportForm = () => {
                     setReportFormVisible(false);
                   }}
                 >
-                  Confirmar
+                  Postar
                 </Button>
               </Box>
             </Box>
           ) : null}
         </form>
       </Grid>
-      <Hidden smDown>
-        <Grid
-          item
-          sm={6}
-          md={6}
-          lg={6}
-          xl={6}
-          className={classes.motivationalGrid}
-        >
-          <FormComplementar
-            similarReports={similarReports}
-            similarReportsLoading={similarReportsLoading}
-            similarReportsError={similarReportsError}
-          />
-        </Grid>
-      </Hidden>
-      <Hidden smUp>
-        <Grid item xs={12} className={classes.motivationalGrid}>
-          <FormComplementar
-            similarReports={similarReports}
-            similarReportsLoading={similarReportsLoading}
-            similarReportsError={similarReportsError}
-          />
-        </Grid>
-      </Hidden>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={6}
+        lg={6}
+        xl={6}
+        className={classes.motivationalGrid}
+      >
+        <FormComplementar
+          similarReports={similarReports}
+          similarReportsLoading={similarReportsLoading}
+          similarReportsError={similarReportsError}
+          step={wizardStep}
+          setReportFormVisible={setReportFormVisible}
+        />
+      </Grid>
     </Grid>
   );
 };

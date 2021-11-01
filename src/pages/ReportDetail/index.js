@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +15,7 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 import useStyles from "./styles";
 
 import serverDown from "../../assets/serverDown.svg";
+
 
 
 const ReportDetail = () => {
@@ -65,12 +67,14 @@ const ReportDetail = () => {
               </Grid>
             </Grid>
             <Grid container className={classes.marginBottom}>
-              <Typography variant="h6" color="textSecondary">Title</Typography>
-              {JSON.stringify(report)}
+              <Typography variant="h6" color="textSecondary">Mussum Ipsum Dolor Met</Typography>
             </Grid>
             <Divider />
-            <Grid container className={classes.marginBottom}>
+            <Grid container direction="column" className={classes.comentaryRoot}>
              <Typography variant="h6" color="textSecondary">Comentários</Typography>
+             <Box>
+               <Typography variant="body1" color="textSecondary">Comentary List!</Typography>
+             </Box>
             </Grid>
           </>
         )}

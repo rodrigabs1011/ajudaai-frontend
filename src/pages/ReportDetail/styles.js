@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     marginTop: "13px",
   },
+  comentaryRoot: {
+    margin: `${theme.spacing(2)}px 0`,
+  },
 }));
 
 export default useStyles;
