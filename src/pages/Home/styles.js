@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     marginTop: "13px",
   },
+  emptyBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 }));
 
 export default useStyles;

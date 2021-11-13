@@ -191,8 +191,9 @@ const ReportForm = () => {
   const [wizardStep, setWizardStep] = useState(0);
 
   const [formData, setFormData] = useState({
-    image: undefined,
+    title: "",
     description: "",
+    image: undefined,
   });
   const [formImageError, setFormImageError] = useState();
 
@@ -213,11 +214,27 @@ const ReportForm = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const auxData = { ...formData };
+    auxData[e.target.name] = e.target.value;
+    setFormData(auxData);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setReportFormVisible(false);
+    console.log(formData);
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
     setFormImageError(undefined);
     if (acceptedFiles.length === 1) {
       const fileName = acceptedFiles[0].name;
-      if (['svg', 'png', 'jpeg', 'jpg', 'gif'].includes(fileName.split('.').at(-1).toLowerCase())) {
+      if (
+        ["svg", "png", "jpeg", "jpg", "gif"].includes(
+          fileName.split(".").at(-1).toLowerCase()
+        )
+      ) {
         const auxFormData = { ...formData };
         auxFormData.image = acceptedFiles[0];
         var reader = new FileReader();
@@ -231,7 +248,7 @@ const ReportForm = () => {
       }
     } else {
       setFormImageError("Apenas um arquivo de imagem permitido!");
-    }  // eslint-disable-next-line
+    } // eslint-disable-next-line
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -241,29 +258,31 @@ const ReportForm = () => {
         <Box className={classes.wizardTop}>
           <WizardSteps steps={3} current={wizardStep} label={wizardLabel} />
         </Box>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           {wizardStep === 0 ? (
             <>
               <Typography variant="h6" color="textSecondary">
                 Conte-nos o que você encontrou!
               </Typography>
               <TextField
-                id="description"
+                id="title"
+                name="title"
                 label="Título"
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // value={}
-                // onChange={}
+                value={formData.title}
+                onChange={handleChange}
               />
               <TextField
                 id="description"
+                name="description"
                 label="Descrição"
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // value={}
-                // onChange={}
+                value={formData.description}
+                onChange={handleChange}
               />
 
               <Box className={classes.actionsWrapper}>
@@ -271,10 +290,11 @@ const ReportForm = () => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    setWizardStep(1);
+                    setWizardStep(wizardStep + 1);
                     setWizardLabel(labels[1]);
                     getSimilarReports();
                   }}
+                  disabled={formData.title.length === 0 || formData.description.length === 0}
                 >
                   Próximo
                 </Button>
@@ -323,8 +343,8 @@ const ReportForm = () => {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    setWizardStep(0);
-                    setWizardLabel(labels[0]);
+                    setWizardStep(wizardStep - 1);
+                    setWizardLabel(labels[wizardStep - 1]);
                   }}
                   className={classes.marginRight}
                 >
@@ -334,8 +354,8 @@ const ReportForm = () => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    setWizardStep(2);
-                    setWizardLabel(labels[2]);
+                    setWizardStep(wizardStep + 1);
+                    setWizardLabel(labels[wizardStep + 1]);
                   }}
                 >
                   Próximo
@@ -349,18 +369,18 @@ const ReportForm = () => {
                 Está tudo certo?
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                Dummy Title Item!
+                {formData.title}
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                Mussum Ipsum dolor met!
+                {formData.description}
               </Typography>
               <Box className={classes.actionsWrapper}>
                 <Button
                   variant="outlined"
                   className={classes.marginRight}
                   onClick={() => {
-                    setWizardStep(1);
-                    setWizardLabel(labels[1]);
+                    setWizardStep(wizardStep - 1);
+                    setWizardLabel(labels[wizardStep - 1]);
                   }}
                 >
                   Voltar
@@ -368,9 +388,7 @@ const ReportForm = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => {
-                    setReportFormVisible(false);
-                  }}
+                  type="submit"
                 >
                   Postar
                 </Button>

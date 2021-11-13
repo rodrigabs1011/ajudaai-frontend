@@ -19,8 +19,9 @@ const Footer = () => {
         alignItems="center"
       >
         <Typography variant="body1" color="textSecondary">
-          AJUDAAÍ, 2021. Imagens cortezias de{" "}
+          AJUDAAÍ, 2021. Imagens cortesia de{" "}
           <Link
+            to="#"
             onClick={(e) => {
               e.preventDefault();
               window.open("https://undraw.co/illustrations");

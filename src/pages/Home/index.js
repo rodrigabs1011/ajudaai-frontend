@@ -15,7 +15,6 @@ import useStyles from "./styles";
 import serverDown from "../../assets/serverDown.svg";
 
 const Home = () => {
-  console.log("Loading Home!!!");
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();

@@ -1,4 +1,5 @@
 import React from "react";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
@@ -30,10 +31,12 @@ const ReportList = (props) => {
 
   return (
     <Grid item md={6} lg={6} xl={6}>
-      <Typography variant="h6" color="primary" className={classes.marginBottom}>
-        Nenhum ajuda aí por aqui
-      </Typography>
-      <img src={empty} alt="Nenhum(a)" width="100%" />
+      <Box className={classes.emptyBox}>
+        <Typography variant="h6" color="primary" className={classes.marginBottom}>
+          Nenhum ajuda aí por aqui!
+        </Typography>
+        <img src={empty} alt="Nenhum(a)" width="50%" />
+      </Box>
     </Grid>
   );
 };
