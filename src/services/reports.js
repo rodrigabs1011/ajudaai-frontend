@@ -33,6 +33,18 @@ export class ReportService {
     return data.slice(0, 3);
   }
 
+  async createReport(payload) {
+    const { data } = await this.apiRef.post(`/reports/`, payload);
+    return data;
+  }
+
+  async rateReport(id, relevance) {
+    // const { data } = await this.apiRef.post(`/reports/${id}/`, {increment: true});
+    const payload = { relevance };
+    const { data } = await this.apiRef.patch(`/reports/${id}/`, payload);
+    return data;
+  }
+
   // async editSquad(id, payload) {
   //   const { data } = await this.apiRef.patch(`${BASE_API_URL}/api/squads/${id}/`, payload);
   //   return data;

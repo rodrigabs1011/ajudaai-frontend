@@ -75,8 +75,11 @@ const ReportDetail = () => {
                   <Typography variant="body1" color="textSecondary">
                     {report.description}
                   </Typography>
+                  <Typography variant="body1" color="textSecondary">
+                    Ajudometro: {report.relevance}
+                  </Typography>
                 </Grid>
-                <Divider />
+                {/* <Divider />
                 <Grid
                   container
                   direction="column"
@@ -90,7 +93,7 @@ const ReportDetail = () => {
                       Comentary List!
                     </Typography>
                   </Box>
-                </Grid>
+                </Grid> */}
               </>
             )}
           </>

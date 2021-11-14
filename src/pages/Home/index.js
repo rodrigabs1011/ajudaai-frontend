@@ -15,11 +15,10 @@ import useStyles from "./styles";
 import serverDown from "../../assets/serverDown.svg";
 
 const Home = () => {
-  const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const { reportFormVisible } = useContext(GlobalContext);
+  const { reportFormVisible, reports, setReports } = useContext(GlobalContext);
 
   const classes = useStyles();
 
@@ -30,6 +29,7 @@ const Home = () => {
   const getReports = async () => {
     try {
       setLoading(true);
+      setError(undefined);
       const reports = await ReportService.getReports();
       if (reports) setReports(reports);
     } catch (e) {
@@ -44,7 +44,7 @@ const Home = () => {
       <NavBar />
       <main>
         {reportFormVisible ? (
-          <ReportForm />
+          <ReportForm callback={getReports} />
         ) : (
           <>
             <Grid container direction="column" alignItems="center">

@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   motivationalImage: {
     maxWidth: "500px",
-    width: "100%",
+    height: "75%",
   },
   motivationalText: {
     textAlign: "center",
@@ -73,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
   },
   relatedItemsTitle: {
     width: "100%",
-    textAlign: "center",
   },
   similarReportList: {
     display: "flex",
@@ -97,6 +96,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
+  },
+  marginTop: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -148,7 +150,7 @@ const FormComplementar = ({
                     variant="body1"
                     color="primary"
                   >
-                    {item.name}
+                    {item.title}
                   </Typography>
                   <Divider />
                   {/* <ReportItem item={item} className={classes.similarReportItem} /> */}
@@ -184,7 +186,7 @@ const FormComplementar = ({
   );
 };
 
-const ReportForm = () => {
+const ReportForm = ({ callback }) => {
   const classes = useStyles();
   const { setReportFormVisible } = useContext(GlobalContext);
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
@@ -196,6 +198,8 @@ const ReportForm = () => {
     image: undefined,
   });
   const [formImageError, setFormImageError] = useState();
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState();
 
   const [similarReports, setSimilarReports] = useState([]);
   const [similarReportsLoading, setSimilarReportsLoading] = useState(false);
@@ -220,10 +224,19 @@ const ReportForm = () => {
     setFormData(auxData);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setReportFormVisible(false);
-    console.log(formData);
+    try {
+      setFormLoading(true);
+      setFormError(undefined);
+      const report = await ReportService.createReport(formData);
+      callback();
+      setReportFormVisible(false);
+    } catch (e) {
+      setFormError(e.message);
+    } finally {
+      setFormLoading(true);
+    }
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -294,7 +307,10 @@ const ReportForm = () => {
                     setWizardLabel(labels[1]);
                     getSimilarReports();
                   }}
-                  disabled={formData.title.length === 0 || formData.description.length === 0}
+                  disabled={
+                    formData.title.length === 0 ||
+                    formData.description.length === 0
+                  }
                 >
                   Próximo
                 </Button>
@@ -368,12 +384,22 @@ const ReportForm = () => {
               <Typography variant="h6" color="textSecondary">
                 Está tudo certo?
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {formData.title}
-              </Typography>
-              <Typography variant="body1" color="textSecondary">
-                {formData.description}
-              </Typography>
+              <Box className={classes.marginTop}>
+                <Typography variant="button" color="textSecondary">
+                  Título
+                </Typography>
+                <Typography variant="body1" color="textSecondary">
+                  {formData.title}
+                </Typography>
+              </Box>
+              <Box className={classes.marginTop}>
+                <Typography variant="button" color="textSecondary">
+                  Descrição
+                </Typography>
+                <Typography variant="body1" color="textSecondary">
+                  {formData.description}
+                </Typography>
+              </Box>
               <Box className={classes.actionsWrapper}>
                 <Button
                   variant="outlined"
@@ -385,11 +411,7 @@ const ReportForm = () => {
                 >
                   Voltar
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
+                <Button variant="contained" color="primary" type="submit">
                   Postar
                 </Button>
               </Box>
