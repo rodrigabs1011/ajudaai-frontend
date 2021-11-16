@@ -28,16 +28,15 @@ const ReportItem = ({ item }) => {
       );
       if (data) {
         const auxReports = reports.map((report) => {
-          console.log(item.id === report.id);
           if (item.id === report.id) {
-            return { ...item, relevance: data.relevance };
+            return { ...item, upvotes: data.upvotes, downvotes: data.downvotes };
           }
           return report;
         });
         setReports(auxReports);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       setRateLoading(false);
     }
@@ -85,7 +84,7 @@ const ReportItem = ({ item }) => {
             <ThumbUpIcon className={classes.relevanceIcon} />
           </IconButton>
           <Typography variant="button" color="textSecondary">
-            {item.relevance !== 0 ? item.relevance : "-"}
+            {item.upvotes - item.downvotes}
           </Typography>
           <IconButton
             disabled={rateLoading}
