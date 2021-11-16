@@ -39,6 +39,18 @@ const Home = () => {
     }
   };
 
+  const handleUpdateItem = (data) => {
+    const auxReports = reports.map((report) => {
+      if (data.id === report.id) {
+        return {
+          ...data,
+        };
+      }
+      return report;
+    });
+    setReports(auxReports);
+  }
+
   return (
     <>
       <NavBar />
@@ -62,7 +74,7 @@ const Home = () => {
               </Grid>
             </Grid>
             <Grid container className={classes.marginBottom}>
-              <ReportList data={reports} loading={loading} error={error} />
+              <ReportList data={reports} loading={loading} error={error} handleUpdateItem={handleUpdateItem} />
             </Grid>
           </>
         )}

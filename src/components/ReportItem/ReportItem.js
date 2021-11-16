@@ -11,28 +11,20 @@ import ReportService from "../../services/reports";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import Vote from "./components/Vote";
+import Upvoted from "./components/Upvoted";
+import Downvoted from "./components/Downvoted";
 
-const ReportItem = ({ item }) => {
+const ReportItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
   const [rateLoading, setRateLoading] = useState(false);
-
-  const { reports, setReports } = useContext(GlobalContext);
 
   const handleRate = async (id, upvote) => {
     try {
       setRateLoading(true);
       const data = await ReportService.rateReport(id, upvote);
       if (data) {
-        const auxReports = reports.map((report) => {
-          if (id === report.id) {
-            return {
-              ...data,
-            };
-          }
-          return report;
-        });
-        setReports(auxReports);
+        handleUpdateItem(data);
       }
     } catch (e) {
       console.error(e);
@@ -73,8 +65,15 @@ const ReportItem = ({ item }) => {
         >
           <SmsIcon fontSize="small" />
         </IconButton> */}
-
-        <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
+        {item.vote === null ? (
+          <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
+        ) : null}
+        {item.vote === true ? (
+          <Upvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
+        ) : null}
+        {item.vote === false ? (
+          <Downvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
+        ) : null}
 
         {/* <IconButton onClick={() => {}}>
           <ErrorOutlineIcon fontSize="small" />

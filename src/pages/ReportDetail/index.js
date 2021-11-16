@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 // import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 // import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 
 import NavBar from "../../components/Navbar";
 import ErrorMsg from "../../components/ErrorMsg";
 import ReportForm from "../../components/ReportForm";
+import ReportItem from "../../components/ReportItem";
 
 import ReportClient from "../../services/reports";
 import { GlobalContext } from "../../providers/GlobalProvider";
@@ -27,10 +28,10 @@ const ReportDetail = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    getReports(); // eslint-disable-next-line
+    getReport(); // eslint-disable-next-line
   }, []);
 
-  const getReports = async () => {
+  const getReport = async () => {
     try {
       setLoading(true);
       const report = await ReportClient.getReportById(id);
@@ -41,6 +42,10 @@ const ReportDetail = () => {
       setLoading(false);
     }
   };
+
+  const handleUpdateItem = (data) => {
+    setReport(data);
+  }
 
   return (
     <>
@@ -69,15 +74,7 @@ const ReportDetail = () => {
             ) : (
               <>
                 <Grid container className={classes.reportContent}>
-                  <Typography variant="h6" color="textSecondary">
-                    Mussum Ipsum Dolor Met
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {report.description}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    Ajudometro: {report.relevance}
-                  </Typography>
+                  <ReportItem item={report} handleUpdateItem={handleUpdateItem} />
                 </Grid>
                 {/* <Divider />
                 <Grid

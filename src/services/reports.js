@@ -17,7 +17,7 @@ export class ReportService {
   }
 
   async getReportById(id) {
-    const { data } = await this.apiRef.get(`/reports/${id}/`);
+    const { data } = await this.apiRef.get(`/reports/${id}/?token=${get_or_create_token()}`);
     return data;
   }
 

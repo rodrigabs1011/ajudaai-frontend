@@ -10,7 +10,7 @@ import empty from "../../assets/empty.svg";
 
 const ReportList = (props) => {
   const classes = useStyles();
-  const { data, loading, error } = props;
+  const { data, loading, error, handleUpdateItem } = props;
 
   if (loading) {
     return <HomeSkeleton />;
@@ -19,7 +19,7 @@ const ReportList = (props) => {
     return data.map((item) => {
       return (
         <Grid item key={item.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-          <ReportItem item={item} />
+          <ReportItem item={item} handleUpdateItem={handleUpdateItem} />
         </Grid>
       );
     });
