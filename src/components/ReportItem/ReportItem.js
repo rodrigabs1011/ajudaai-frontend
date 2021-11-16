@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 
 import useStyles from "./styles";
 import ReportService from "../../services/reports";
-import { GlobalContext } from "../../providers/GlobalProvider";
 
 import Vote from "./components/Vote";
 import Upvoted from "./components/Upvoted";
