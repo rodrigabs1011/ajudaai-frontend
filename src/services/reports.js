@@ -38,8 +38,8 @@ export class ReportService {
     return data;
   }
 
-  async rateReport(id, increment) {
-    const { data } = await this.apiRef.post(`/reports/${id}/rate/`, {increment});
+  async rateReport(id, upvote) {
+    const { data } = await this.apiRef.post(`/reports/${id}/rate/`, {upvote});
     return data;
   }
 

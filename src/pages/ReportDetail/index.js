@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import Box from "@material-ui/core/Box";
+// import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
+// import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
 import NavBar from "../../components/Navbar";

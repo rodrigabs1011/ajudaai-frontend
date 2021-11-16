@@ -229,7 +229,7 @@ const ReportForm = ({ callback }) => {
     try {
       setFormLoading(true);
       setFormError(undefined);
-      const report = await ReportService.createReport(formData);
+      await ReportService.createReport(formData);
       callback();
       setReportFormVisible(false);
     } catch (e) {
@@ -272,6 +272,7 @@ const ReportForm = ({ callback }) => {
           <WizardSteps steps={3} current={wizardStep} label={wizardLabel} />
         </Box>
         <form className={classes.form} onSubmit={handleSubmit}>
+          <ErrorMsg error={formError} />
           {wizardStep === 0 ? (
             <>
               <Typography variant="h6" color="textSecondary">
@@ -411,7 +412,7 @@ const ReportForm = ({ callback }) => {
                 >
                   Voltar
                 </Button>
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="primary" type="submit" disabled={formLoading}>
                   Postar
                 </Button>
               </Box>
