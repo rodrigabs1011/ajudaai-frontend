@@ -24,7 +24,7 @@ const ReportItem = ({ item }) => {
       setRateLoading(true);
       const data = await ReportService.rateReport(
         item.id,
-        parseInt(increment ? item.relevance + 15 : item.relevance - 15)
+        increment
       );
       if (data) {
         const auxReports = reports.map((report) => {
@@ -68,13 +68,13 @@ const ReportItem = ({ item }) => {
       </Box>
 
       <div className={classes.relevanceWrapper}>
-        <IconButton
+        {/* <IconButton
           onClick={() => {}}
           component={Link}
           to={`/reports/${item.id}/?action=comment`}
         >
           <SmsIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
         <div className={classes.relevance}>
           <IconButton
             disabled={rateLoading}

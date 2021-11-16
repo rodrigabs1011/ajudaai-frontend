@@ -38,10 +38,8 @@ export class ReportService {
     return data;
   }
 
-  async rateReport(id, relevance) {
-    // const { data } = await this.apiRef.post(`/reports/${id}/`, {increment: true});
-    const payload = { relevance };
-    const { data } = await this.apiRef.patch(`/reports/${id}/`, payload);
+  async rateReport(id, increment) {
+    const { data } = await this.apiRef.post(`/reports/${id}/rate/`, {increment});
     return data;
   }
 
