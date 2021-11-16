@@ -3,33 +3,32 @@ import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 // import SmsIcon from "@material-ui/icons/Sms";
-import IconButton from "@material-ui/core/IconButton";
 // import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 
 import useStyles from "./styles";
 import ReportService from "../../services/reports";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
+import Vote from "./components/Vote";
+
 const ReportItem = ({ item }) => {
   const classes = useStyles();
 
   const [rateLoading, setRateLoading] = useState(false);
+
   const { reports, setReports } = useContext(GlobalContext);
 
-  const handleRate = async (item, upvote) => {
+  const handleRate = async (id, upvote) => {
     try {
       setRateLoading(true);
-      const data = await ReportService.rateReport(
-        item.id,
-        upvote
-      );
+      const data = await ReportService.rateReport(id, upvote);
       if (data) {
         const auxReports = reports.map((report) => {
-          if (item.id === report.id) {
-            return { ...item, upvotes: data.upvotes, downvotes: data.downvotes };
+          if (id === report.id) {
+            return {
+              ...data,
+            };
           }
           return report;
         });
@@ -74,27 +73,9 @@ const ReportItem = ({ item }) => {
         >
           <SmsIcon fontSize="small" />
         </IconButton> */}
-        <div className={classes.relevance}>
-          <IconButton
-            disabled={rateLoading}
-            onClick={() => {
-              handleRate(item, true);
-            }}
-          >
-            <ThumbUpIcon className={classes.relevanceIcon} />
-          </IconButton>
-          <Typography variant="button" color="textSecondary">
-            {item.upvotes - item.downvotes}
-          </Typography>
-          <IconButton
-            disabled={rateLoading}
-            onClick={() => {
-              handleRate(item, false);
-            }}
-          >
-            <ThumbDownIcon className={classes.relevanceIcon} />
-          </IconButton>
-        </div>
+
+        <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
+
         {/* <IconButton onClick={() => {}}>
           <ErrorOutlineIcon fontSize="small" />
         </IconButton> */}

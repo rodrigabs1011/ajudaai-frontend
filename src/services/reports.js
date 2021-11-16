@@ -1,12 +1,7 @@
 import axios from "axios";
 
 import { BASE_API_URL } from "../utils/urls";
-import { headers } from "../utils/core";
-
-const axiosClient = axios.create({
-  baseURL: `${BASE_API_URL}/api/`,
-  headers,
-});
+import { headers, get_or_create_token } from "../utils/core";
 
 export class ReportService {
   constructor() {
@@ -17,7 +12,7 @@ export class ReportService {
   }
 
   async getReports() {
-    const { data } = await this.apiRef.get(`/reports/`);
+    const { data } = await this.apiRef.get(`/reports/?token=${get_or_create_token()}`);
     return data;
   }
 
@@ -39,116 +34,12 @@ export class ReportService {
   }
 
   async rateReport(id, upvote) {
-    const { data } = await this.apiRef.post(`/reports/${id}/rate/`, {upvote});
+    const { data } = await this.apiRef.post(`/reports/${id}/rate/`, {
+      upvote,
+      token: get_or_create_token(),
+    });
     return data;
   }
-
-  // async editSquad(id, payload) {
-  //   const { data } = await this.apiRef.patch(`${BASE_API_URL}/api/squads/${id}/`, payload);
-  //   return data;
-  // }
 }
-
-const getSquadById = async ({ id, setSquad, setLoading, setError }) => {
-  try {
-    setLoading(true);
-    const response = await axiosClient.get(`${BASE_API_URL}/api/squads/${id}/`);
-    setSquad(response.data);
-  } catch (e) {
-    setError(e.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const getSquadRoles = async ({ id, setSquadUsers, setLoading, setError }) => {
-  try {
-    setLoading(true);
-    const response = await axiosClient.get(
-      `${BASE_API_URL}/api/squads/${id}/users/`
-    );
-    setSquadUsers(response.data);
-  } catch (e) {
-    setError(e.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const getSquadPermissions = async ({
-  id,
-  setSquadPermissions,
-  setLoading,
-  setError,
-}) => {
-  try {
-    setLoading(true);
-    const response = await axiosClient.get(
-      `${BASE_API_URL}/api/squads/${id}/permissions/`
-    );
-    setSquadPermissions(response.data);
-  } catch (e) {
-    setError(e.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const getSquadAndTribe = async ({
-  id,
-  setSquadAndTribe,
-  setLoading,
-  setError,
-}) => {
-  try {
-    setLoading(true);
-    const response = await axiosClient.get(
-      `${BASE_API_URL}/api/squads/${id}/tribe/`
-    );
-    setSquadAndTribe(response.data);
-  } catch (e) {
-    setError(e.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const addSquadMember = async ({
-  payload,
-  setResponse,
-  setLoading,
-  setError,
-}) => {
-  try {
-    setLoading(true);
-    const response = await axiosClient.post(
-      `${BASE_API_URL}/api/squad-roles/`,
-      payload
-    );
-    setResponse(response);
-  } catch (e) {
-    setError(e.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const deleteSquad = async ({ data, id }) => {
-  const response = await axiosClient.delete(
-    `${BASE_API_URL}/api/squads/${id}/`
-  );
-  return response;
-};
-
-
-export {
-  getSquadById,
-  getSquadRoles,
-  getSquadPermissions,
-  getSquadAndTribe,
-  addSquadMember,
-  deleteSquad,
-};
-
 
 export default new ReportService();
