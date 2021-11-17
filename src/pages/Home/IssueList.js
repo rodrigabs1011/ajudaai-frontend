@@ -3,12 +3,12 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import ReportItem from "../../components/ReportItem";
+import IssueItem from "../../components/IssueItem";
 import HomeSkeleton from "./skeletons";
 import useStyles from "./styles";
 import empty from "../../assets/empty.svg";
 
-const ReportList = (props) => {
+const IssueList = (props) => {
   const classes = useStyles();
   const { data, loading, error, handleUpdateItem } = props;
 
@@ -19,7 +19,7 @@ const ReportList = (props) => {
     return data.map((item) => {
       return (
         <Grid item key={item.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-          <ReportItem item={item} handleUpdateItem={handleUpdateItem} />
+          <IssueItem item={item} handleUpdateItem={handleUpdateItem} />
         </Grid>
       );
     });
@@ -41,4 +41,4 @@ const ReportList = (props) => {
   );
 };
 
-export default ReportList;
+export default IssueList;

@@ -1,11 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  reportContent: {
+  issueContent: {
     marginBottom: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-
   },
 }));
 

@@ -3,11 +3,11 @@ import React, { createContext, useState } from "react";
 export const GlobalContext = createContext();
 
 const GlobalProvider = (props) => {
-  const [reportFormVisible, setReportFormVisible] = useState(false);
-  const [reports, setReports] = useState([]);
+  const [issueFormVisible, setIssueFormVisible] = useState(false);
+  const [issues, setIssues] = useState([]);
 
   return (
-    <GlobalContext.Provider value={{ reportFormVisible, setReportFormVisible, reports, setReports }}>
+    <GlobalContext.Provider value={{ issueFormVisible, setIssueFormVisible, issues, setIssues }}>
       {props.children}
     </GlobalContext.Provider>
   );

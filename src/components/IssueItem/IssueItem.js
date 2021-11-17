@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-// import SmsIcon from "@material-ui/icons/Sms";
-// import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import SmsIcon from "@material-ui/icons/Sms";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import useStyles from "./styles";
-import ReportService from "../../services/reports";
+import IssuesService from "../../services/issues";
 
 import Vote from "./components/Vote";
 import Upvoted from "./components/Upvoted";
 import Downvoted from "./components/Downvoted";
 
-const ReportItem = ({ item, handleUpdateItem }) => {
+const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
   const [rateLoading, setRateLoading] = useState(false);
@@ -21,7 +22,7 @@ const ReportItem = ({ item, handleUpdateItem }) => {
   const handleRate = async (id, upvote) => {
     try {
       setRateLoading(true);
-      const data = await ReportService.rateReport(id, upvote);
+      const data = await IssuesService.rateIssue(id, upvote);
       if (data) {
         handleUpdateItem(data);
       }
@@ -35,7 +36,7 @@ const ReportItem = ({ item, handleUpdateItem }) => {
   return (
     <Box className={classes.listItem}>
       <Typography variant="h6" color="primary">
-        <Link to={`/reports/${item.id}/`}>{item.title}</Link>
+        <Link to={`/issues/${item.id}/`}>{item.title}</Link>
       </Typography>
       <Typography
         variant="body1"
@@ -57,13 +58,13 @@ const ReportItem = ({ item, handleUpdateItem }) => {
       </Box>
 
       <div className={classes.relevanceWrapper}>
-        {/* <IconButton
+        <IconButton
           onClick={() => {}}
           component={Link}
-          to={`/reports/${item.id}/?action=comment`}
+          to={`/issues/${item.id}/?action=comment`}
         >
           <SmsIcon fontSize="small" />
-        </IconButton> */}
+        </IconButton>
         {item.vote === null ? (
           <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
         ) : null}
@@ -74,13 +75,13 @@ const ReportItem = ({ item, handleUpdateItem }) => {
           <Downvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
         ) : null}
 
-        {/* <IconButton onClick={() => {}}>
+        <IconButton onClick={() => {}}>
           <ErrorOutlineIcon fontSize="small" />
-        </IconButton> */}
+        </IconButton>
       </div>
       <Divider />
     </Box>
   );
 };
 
-export default ReportItem;
+export default IssueItem;

@@ -13,7 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PublishIcon from "@material-ui/icons/Publish";
 
 import { GlobalContext } from "../../providers/GlobalProvider";
-import ReportService from "../../services/reports";
+import IssuesService from "../../services/issues";
 import WizardSteps from "../WizardSteps";
 import ErrorMsg from "../ErrorMsg";
 import requestFormIllustration from "../../assets/requestFormIllustration.svg";
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   relatedItemsTitle: {
     width: "100%",
   },
-  similarReportList: {
+  similarIssueList: {
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     paddingTop: theme.spacing(1),
   },
-  similarReportItem: {
+  similarIssueItem: {
     width: "100%",
   },
   similarHeadingDescription: {
@@ -103,19 +103,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FormComplementar = ({
-  similarReports,
-  similarReportsLoading,
-  similarReportsError,
+  similarIssues,
+  similarIssuesLoading,
+  similarIssuesError,
   step,
-  setReportFormVisible,
+  setIssueFormVisible,
 }) => {
   const classes = useStyles();
 
   return (
     <>
-      <ErrorMsg error={similarReportsError} />
+      <ErrorMsg error={similarIssuesError} />
 
-      {similarReports.length > 0 && step === 1 ? (
+      {similarIssues.length > 0 && step === 1 ? (
         <Box className={classes.similarWrapper}>
           <Typography
             variant="h6"
@@ -133,16 +133,16 @@ const FormComplementar = ({
             />
             ?
           </Typography>
-          <Box className={classes.similarReportList}>
-            {similarReports.map((item) => {
+          <Box className={classes.similarIssueList}>
+            {similarIssues.map((item) => {
               return (
                 <Link
                   key={item.id}
-                  className={classes.similarReportItem}
-                  to={`/reports/${item.id}/`}
+                  className={classes.similarIssueItem}
+                  to={`/issues/${item.id}/`}
                   onClick={(e) => {
                     e.preventDefault();
-                    window.open(`/reports/${item.id}/`);
+                    window.open(`/issues/${item.id}/`);
                   }}
                 >
                   <Typography
@@ -153,7 +153,7 @@ const FormComplementar = ({
                     {item.title}
                   </Typography>
                   <Divider />
-                  {/* <ReportItem item={item} className={classes.similarReportItem} /> */}
+                  {/* <IssueItem item={item} className={classes.similarIssueItem} /> */}
                 </Link>
               );
             })}
@@ -161,7 +161,7 @@ const FormComplementar = ({
         </Box>
       ) : (
         <>
-          {similarReportsLoading ? (
+          {similarIssuesLoading ? (
             <CircularProgress />
           ) : (
             <Box className={classes.motivationalWrapper}>
@@ -186,9 +186,9 @@ const FormComplementar = ({
   );
 };
 
-const ReportForm = ({ callback }) => {
+const IssueForm = ({ callback }) => {
   const classes = useStyles();
-  const { setReportFormVisible } = useContext(GlobalContext);
+  const { setIssueFormVisible } = useContext(GlobalContext);
   const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
   const [wizardStep, setWizardStep] = useState(0);
 
@@ -201,20 +201,20 @@ const ReportForm = ({ callback }) => {
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState();
 
-  const [similarReports, setSimilarReports] = useState([]);
-  const [similarReportsLoading, setSimilarReportsLoading] = useState(false);
-  const [similarReportsError, setSimilarReportsError] = useState([]);
+  const [similarIssues, setSimilarIssues] = useState([]);
+  const [similarIssuesLoading, setSimilarIssuesLoading] = useState(false);
+  const [similarIssuesError, setSimilarIssuesError] = useState([]);
 
-  const getSimilarReports = async () => {
+  const getSimilarIssues = async () => {
     try {
-      setSimilarReportsError(undefined);
-      setSimilarReportsLoading(true);
-      const reports = await ReportService.getSimilarReports(formData);
-      if (reports) setSimilarReports(reports);
+      setSimilarIssuesError(undefined);
+      setSimilarIssuesLoading(true);
+      const issues = await IssuesService.getSimilarIssues(formData);
+      if (issues) setSimilarIssues(issues);
     } catch (e) {
-      setSimilarReportsError(e.message);
+      setSimilarIssuesError(e.message);
     } finally {
-      setSimilarReportsLoading(false);
+      setSimilarIssuesLoading(false);
     }
   };
 
@@ -229,9 +229,9 @@ const ReportForm = ({ callback }) => {
     try {
       setFormLoading(true);
       setFormError(undefined);
-      await ReportService.createReport(formData);
+      await IssuesService.addIssue(formData);
       callback();
-      setReportFormVisible(false);
+      setIssueFormVisible(false);
     } catch (e) {
       setFormError(e.message);
     } finally {
@@ -306,7 +306,7 @@ const ReportForm = ({ callback }) => {
                   onClick={() => {
                     setWizardStep(wizardStep + 1);
                     setWizardLabel(labels[1]);
-                    getSimilarReports();
+                    getSimilarIssues();
                   }}
                   disabled={
                     formData.title.length === 0 ||
@@ -430,15 +430,15 @@ const ReportForm = ({ callback }) => {
         className={classes.motivationalGrid}
       >
         <FormComplementar
-          similarReports={similarReports}
-          similarReportsLoading={similarReportsLoading}
-          similarReportsError={similarReportsError}
+          similarIssues={similarIssues}
+          similarIssuesLoading={similarIssuesLoading}
+          similarIssuesError={similarIssuesError}
           step={wizardStep}
-          setReportFormVisible={setReportFormVisible}
+          setIssueFormVisible={setIssueFormVisible}
         />
       </Grid>
     </Grid>
   );
 };
 
-export default ReportForm;
+export default IssueForm;

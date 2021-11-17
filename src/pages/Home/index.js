@@ -4,10 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ErrorMsg from "../../components/ErrorMsg";
-import ReportForm from "../../components/ReportForm";
-import ReportList from "./ReportList";
+import IssueForm from "../../components/IssueForm";
+import IssueList from "./IssueList";
 
-import ReportService from "../../services/reports";
+import IssuesService from "../../services/issues";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
@@ -18,20 +18,20 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const { reportFormVisible, reports, setReports } = useContext(GlobalContext);
+  const { issueFormVisible, issues, setIssues } = useContext(GlobalContext);
 
   const classes = useStyles();
 
   useEffect(() => {
-    getReports(); // eslint-disable-next-line
+    getIssues(); // eslint-disable-next-line
   }, []);
 
-  const getReports = async () => {
+  const getIssues = async () => {
     try {
       setLoading(true);
       setError(undefined);
-      const reports = await ReportService.getReports();
-      if (reports) setReports(reports);
+      const issues = await IssuesService.getAllIssues();
+      if (issues) setIssues(issues);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -40,23 +40,23 @@ const Home = () => {
   };
 
   const handleUpdateItem = (data) => {
-    const auxReports = reports.map((report) => {
-      if (data.id === report.id) {
+    const auxIssues = issues.map((issue) => {
+      if (data.id === issue.id) {
         return {
           ...data,
         };
       }
-      return report;
+      return issue;
     });
-    setReports(auxReports);
+    setIssues(auxIssues);
   }
 
   return (
     <>
       <NavBar />
       <main>
-        {reportFormVisible ? (
-          <ReportForm callback={getReports} />
+        {issueFormVisible ? (
+          <IssueForm callback={getIssues} />
         ) : (
           <>
             <Grid container direction="column" alignItems="center">
@@ -74,7 +74,7 @@ const Home = () => {
               </Grid>
             </Grid>
             <Grid container className={classes.marginBottom}>
-              <ReportList data={reports} loading={loading} error={error} handleUpdateItem={handleUpdateItem} />
+              <IssueList data={issues} loading={loading} error={error} handleUpdateItem={handleUpdateItem} />
             </Grid>
           </>
         )}

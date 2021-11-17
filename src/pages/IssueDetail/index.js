@@ -7,35 +7,35 @@ import Grid from "@material-ui/core/Grid";
 
 import NavBar from "../../components/Navbar";
 import ErrorMsg from "../../components/ErrorMsg";
-import ReportForm from "../../components/ReportForm";
-import ReportItem from "../../components/ReportItem";
+import IssueForm from "../../components/IssueForm";
+import IssueItem from "../../components/IssueItem";
 
-import ReportClient from "../../services/reports";
+import IssuesService from "../../services/issues";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
 
 import serverDown from "../../assets/serverDown.svg";
 
-const ReportDetail = () => {
+const IssueDetail = () => {
   const { id } = useParams();
-  const [report, setReport] = useState();
+  const [issue, setIssue] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const { reportFormVisible } = useContext(GlobalContext);
+  const { issueFormVisible } = useContext(GlobalContext);
 
   const classes = useStyles();
 
   useEffect(() => {
-    getReport(); // eslint-disable-next-line
+    getIssue(); // eslint-disable-next-line
   }, []);
 
-  const getReport = async () => {
+  const getIssue = async () => {
     try {
       setLoading(true);
-      const report = await ReportClient.getReportById(id);
-      if (report) setReport(report);
+      const issue = await IssuesService.getIssueById(id);
+      if (issue) setIssue(issue);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -44,15 +44,15 @@ const ReportDetail = () => {
   };
 
   const handleUpdateItem = (data) => {
-    setReport(data);
+    setIssue(data);
   }
 
   return (
     <>
       <NavBar />
       <main>
-        {reportFormVisible ? (
-          <ReportForm />
+        {issueFormVisible ? (
+          <IssueForm />
         ) : (
           <>
             <Grid container direction="column" alignItems="center">
@@ -73,8 +73,8 @@ const ReportDetail = () => {
               "Loading"
             ) : (
               <>
-                <Grid container className={classes.reportContent}>
-                  <ReportItem item={report} handleUpdateItem={handleUpdateItem} />
+                <Grid container className={classes.issueContent}>
+                  <IssueItem item={issue} handleUpdateItem={handleUpdateItem} />
                 </Grid>
                 {/* <Divider />
                 <Grid
@@ -100,4 +100,4 @@ const ReportDetail = () => {
   );
 };
 
-export default ReportDetail;
+export default IssueDetail;

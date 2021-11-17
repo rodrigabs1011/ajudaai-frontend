@@ -18,14 +18,14 @@ import useStyles from "./styles";
 
 const NavBar = () => {
   const classes = useStyles();
-  const { reportFormVisible, setReportFormVisible } = useContext(GlobalContext);
+  const { issueFormVisible, setIssueFormVisible } = useContext(GlobalContext);
 
-  const closeReportForm = () => {
-    setReportFormVisible(false);
+  const closeIssueForm = () => {
+    setIssueFormVisible(false);
   };
 
-  const openReportForm = () => {
-    setReportFormVisible(true);
+  const openIssueForm = () => {
+    setIssueFormVisible(true);
   };
 
   let navLinks = (<></>)
@@ -62,17 +62,17 @@ const NavBar = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          {reportFormVisible ? (
+          {issueFormVisible ? (
             <>
-              <IconButton onClick={closeReportForm}>
+              <IconButton onClick={closeIssueForm}>
                 <ArrowBackIcon />
               </IconButton>
-              <Link to="/" onClick={closeReportForm}>
+              <Link to="/" onClick={closeIssueForm}>
                 <Typography variant="h2" className={classes.brandText}>
                   AJUDA AÍ
                 </Typography>
               </Link>
-              <IconButton onClick={closeReportForm}>
+              <IconButton onClick={closeIssueForm}>
                 <CloseIcon />
               </IconButton>
             </>
@@ -90,7 +90,7 @@ const NavBar = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={openReportForm}
+                  onClick={openIssueForm}
                   endIcon={<MarkunreadMailboxIcon />}
                 >
                   POSTAR
