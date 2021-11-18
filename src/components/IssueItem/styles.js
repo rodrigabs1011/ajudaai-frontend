@@ -7,10 +7,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
   },
   listItem: {
-    padding: `0 ${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
-    [theme.breakpoints.down('xs')]: {
-      padding: 0,
-    },
     marginBottom: theme.spacing(3),
     width: '100%',
   },

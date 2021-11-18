@@ -40,6 +40,11 @@ export class IssuesService {
     });
     return data;
   }
+
+  async getIssueComments(id) {
+    const { data } = await this.apiRef.get(`/issues/${id}/comments/?token=${get_or_create_token()}`);
+    return data;
+  }
 }
 
 export default new IssuesService();

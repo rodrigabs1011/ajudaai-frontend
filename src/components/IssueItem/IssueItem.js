@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,13 +13,22 @@ import IssuesService from "../../services/issues";
 import Vote from "./components/Vote";
 import Upvoted from "./components/Upvoted";
 import Downvoted from "./components/Downvoted";
+import AskForLogin from "../AskForLogin";
+
+import { GlobalContext } from "../../providers/GlobalProvider";
 
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
+  const { isAnonymous, isAuthenticated, askForLoginVisible, setAskForLoginVisible } = useContext(GlobalContext);
+
   const [rateLoading, setRateLoading] = useState(false);
 
   const handleRate = async (id, upvote) => {
+    if(!isAnonymous && !isAuthenticated) {
+      setAskForLoginVisible(true);
+      return;
+    }
     try {
       setRateLoading(true);
       const data = await IssuesService.rateIssue(id, upvote);
@@ -35,6 +44,11 @@ const IssueItem = ({ item, handleUpdateItem }) => {
 
   return (
     <Box className={classes.listItem}>
+      {askForLoginVisible ? <AskForLogin /> : null}
+
+
+      {JSON.stringify({isAuthenticated, isAnonymous})}
+
       <Typography variant="h6" color="primary">
         <Link to={`/issues/${item.id}/`}>{item.title}</Link>
       </Typography>

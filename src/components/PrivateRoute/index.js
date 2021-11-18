@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { isAuthenticated } from "../../utils/auth";
 
+import { GlobalContext } from "../../providers/GlobalProvider";
 
-export default class PrivateRoute extends Component {
-  render() {
-    const Component = this.props.component;
-    return isAuthenticated ? <Component /> : <Redirect to="/signin" />;
-  }
-}
+const PrivateRoute = ({ component: Component }) => {
+  const { isAuthenticated } = useContext(GlobalContext);
+
+  return isAuthenticated ? <Component /> : <Redirect to="/signin" />;
+};
+
+export default PrivateRoute;

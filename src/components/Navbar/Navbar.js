@@ -7,9 +7,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
-
-import { isAuthenticated } from "../../utils/auth";
+import MarkunreadMailboxIcon from "@material-ui/icons/MarkunreadMailbox";
 
 import Logout from "../Logout";
 import { GlobalContext } from "../../providers/GlobalProvider";
@@ -18,7 +16,9 @@ import useStyles from "./styles";
 
 const NavBar = () => {
   const classes = useStyles();
-  const { issueFormVisible, setIssueFormVisible } = useContext(GlobalContext);
+  const { issueFormVisible, setIssueFormVisible, isAuthenticated } = useContext(
+    GlobalContext
+  );
 
   const closeIssueForm = () => {
     setIssueFormVisible(false);
@@ -28,26 +28,19 @@ const NavBar = () => {
     setIssueFormVisible(true);
   };
 
-  let navLinks = (<></>)
-  // (
-  //   <>
-  //     <li>
-  //       <Link className={classes.navItem} to="/">
-  //         {/* TODO: to="/about" */}
-  //         Inicio
-  //       </Link>
-  //     </li>
-  //   </>
-  // );
+  let navLinks = (
+    <>
+      <li>
+        <Link className={classes.navItem} to="/login/">
+          Entrar
+        </Link>
+      </li>
+    </>
+  );
 
   if (isAuthenticated) {
     navLinks = (
       <>
-        <li>
-          <Link className={classes.navItem} to="/">
-            Inicio
-          </Link>
-        </li>
         <Logout></Logout>
       </>
     );
