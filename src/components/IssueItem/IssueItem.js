@@ -13,7 +13,8 @@ import IssuesService from "../../services/issues";
 import Vote from "./components/Vote";
 import Upvoted from "./components/Upvoted";
 import Downvoted from "./components/Downvoted";
-import AskForLogin from "../AskForLogin";
+
+import { handleAskForLogin } from '../../utils/core';
 
 import { GlobalContext } from "../../providers/GlobalProvider";
 
@@ -25,29 +26,22 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   const [rateLoading, setRateLoading] = useState(false);
 
   const handleRate = async (id, upvote) => {
-    if(!isAnonymous && !isAuthenticated) {
-      setAskForLoginVisible(true);
-      return;
-    }
-    try {
-      setRateLoading(true);
-      const data = await IssuesService.rateIssue(id, upvote);
-      if (data) {
-        handleUpdateItem(data);
+    if (handleAskForLogin({isAnonymous, isAuthenticated, setAskForLoginVisible})) {
+      try {
+        setRateLoading(true);
+        const data = await IssuesService.rateIssue(id, upvote);
+        if (data) {
+          handleUpdateItem(data);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setRateLoading(false);
       }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setRateLoading(false);
     }
   };
   return (
     <Box className={classes.listItem}>
-      {askForLoginVisible ? <AskForLogin /> : null}
-
-
-      {JSON.stringify({isAuthenticated, isAnonymous})}
-
       <Typography variant="h6" color="primary">
         <Link to={`/issues/${item.id}/`}>{item.title}</Link>
       </Typography>

@@ -1,11 +1,18 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 import { GlobalContext } from "../../providers/GlobalProvider";
 import AuthService from "../../services/auth";
+import Typography from "@material-ui/core/Typography";
+import useStyles from "./styles";
 
+import ErrorMsg from "../../components/ErrorMsg";
 
 const Login = () => {
+  const classes = useStyles();
   const { isAuthenticated, setIsAuthenticated } = useContext(GlobalContext);
 
   const [loading, setLoading] = useState(false);
@@ -26,11 +33,9 @@ const Login = () => {
       const data = await AuthService.signin(formData);
       localStorage.setItem("AJUDAAI_SESSION_TOKEN", data.token);
       setIsAuthenticated(true);
-    }
-    catch (error) {
+    } catch (error) {
       setError(error.message);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -39,50 +44,47 @@ const Login = () => {
     <Redirect to="/"></Redirect>
   ) : (
     <main>
-      <div className="container color-gray-500">
-        <div className="row flex justify-center">
-          <h2 className="color-gray-700 text-center">Entrar</h2>
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+      >
+        <Grid item xl={6} lg={6}>
+          <ErrorMsg error={error} />
+        </Grid>
+        <Grid item xl={6} lg={6}>
+          <Typography variant="h6" color="textPrimary">
+            Entrar
+          </Typography>
+        </Grid>
+        <Grid item xl={6} lg={6}>
+          <form className={classes.formRoot} onSubmit={handleSubmit}>
+            <TextField
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Usuário"
+              onChange={handleChange}
+              margin="dense"
+              required
 
-          <form
-            className="flex flex-col justify-center"
-            onSubmit={handleSubmit}
-          >
-            <div className={"errorContainerClass"}>
-              <div className="error-content">{error}</div>
-            </div>
-            <div className="row my-1">
-              <label htmlFor="username">Usuário</label>
-              <input
-                className="my-1"
-                id="username"
-                type="text"
-                name="username"
-                placeholder="Usuário"
-                onChange={handleChange}
-              />
-            </div>
+            />
 
-            <div className="row mt-1">
-              <label htmlFor="password">Senha</label>
-              <input
-                className="mt-1"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Senha"
-                onChange={handleChange}
-              />
-            </div>
-
-            <button
-              disabled={loading}
-              className={"submitBtnClass"}
-            >
-              Confirmar
-            </button>
+            <TextField
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Senha"
+              onChange={handleChange}
+              margin="dense"
+              required
+            />
+            <Button variant="contained" color="primary" disabled={loading} type="submit">
+              Entrar
+            </Button>
           </form>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </main>
   );
 };

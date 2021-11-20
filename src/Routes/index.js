@@ -10,8 +10,10 @@ import Login from "../pages/Login";
 import IssueDetail from "../pages/IssueDetail";
 import ServerError from "../pages/ServerError";
 
+import AskForLogin from "../components/AskForLogin";
+
 const Routes = () => {
-  const { setIsAuthenticated } = useContext(GlobalContext);
+  const { setIsAuthenticated, askForLoginVisible } = useContext(GlobalContext);
 
   useEffect(() => {
     setIsAuthenticated(
@@ -29,6 +31,7 @@ const Routes = () => {
         <Route exact path="/500" component={ServerError} />
         <Route component={NotFound} />
       </Switch>
+      {askForLoginVisible ? <AskForLogin /> : null}
     </Fragment>
   );
 };
