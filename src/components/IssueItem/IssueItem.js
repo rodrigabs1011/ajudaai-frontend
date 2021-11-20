@@ -25,11 +25,11 @@ const IssueItem = ({ item, handleUpdateItem }) => {
 
   const [rateLoading, setRateLoading] = useState(false);
 
-  const handleRate = async (id, upvote) => {
+  const handleRate = async (upvote) => {
     if (handleAskForLogin({isAnonymous, isAuthenticated, setAskForLoginVisible})) {
       try {
         setRateLoading(true);
-        const data = await IssuesService.rateIssue(id, upvote);
+        const data = await IssuesService.rateIssue(item.slug, upvote);
         if (data) {
           handleUpdateItem(data);
         }
@@ -43,7 +43,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   return (
     <Box className={classes.listItem}>
       <Typography variant="h6" color="primary">
-        <Link to={`/issues/${item.id}/`}>{item.title}</Link>
+        <Link to={`/issues/${item.slug}/`}>{item.title}</Link>
       </Typography>
       <Typography
         variant="body1"
@@ -68,7 +68,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
         <IconButton
           onClick={() => {}}
           component={Link}
-          to={`/issues/${item.id}/?action=comment`}
+          to={`/issues/${item.slug}/?action=comment`}
         >
           <SmsIcon fontSize="small" />
         </IconButton>

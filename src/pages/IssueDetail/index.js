@@ -20,7 +20,7 @@ import useStyles from "./styles";
 import serverDown from "../../assets/serverDown.svg";
 
 const IssueDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [issue, setIssue] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
@@ -43,7 +43,7 @@ const IssueDetail = () => {
   const getIssue = async () => {
     try {
       setLoading(true);
-      const issue = await IssuesService.getIssueById(id);
+      const issue = await IssuesService.getIssueBySlug(slug);
       if (issue) setIssue(issue);
     } catch (e) {
       setError(e.message);
@@ -60,7 +60,7 @@ const IssueDetail = () => {
     try {
       setCommentsLoading(true);
       setCommentsError(undefined);
-      const comments = await IssuesService.getIssueComments(id);
+      const comments = await IssuesService.getIssueComments(slug);
       if (comments) setComments(comments);
     } catch (e) {
       setCommentsError(e.message);
@@ -77,7 +77,7 @@ const IssueDetail = () => {
     try {
       setCommentaryLoading(true);
       setCommentaryError(undefined);
-      const data = await CommentsService.addCommentary({issue: id, text: commentary, user: 0 });
+      const data = await CommentsService.addCommentary({issue: issue.id, text: commentary, user: 0 });
     } catch(e) {
       setCommentaryError(e.message);
     } finally {
