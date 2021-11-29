@@ -2,8 +2,8 @@ import axios from "axios";
 
 import { BASE_API_URL } from "../utils/urls";
 import { headers, get_or_create_token } from "../utils/core";
-
 export class IssuesService {
+  
   constructor() {
     this.apiRef = axios.create({
       baseURL: `${BASE_API_URL}/ajudaai/v1`,
@@ -11,8 +11,8 @@ export class IssuesService {
     });
   }
 
-  async getAllIssues() {
-    const { data } = await this.apiRef.get(`/issues/?token=${get_or_create_token()}`);
+  async getAllIssues(page = 1) {
+    const { data } = await this.apiRef.get(`/issues/?page=${page}&token=${get_or_create_token()}`);
     return data;
   }
 

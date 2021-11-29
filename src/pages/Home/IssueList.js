@@ -28,7 +28,6 @@ const IssueList = (props) => {
   if (error) {
     return null;
   }
-
   return (
     <Grid item md={6} lg={6} xl={6}>
       <Box className={classes.emptyBox}>

@@ -32,7 +32,6 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       setRateLoading(false);
     }
   };
-
   return (
     <Box className={classes.listItem}>
       <Typography variant="h6" color="primary">
