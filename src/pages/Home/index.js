@@ -27,8 +27,8 @@ const Home = () => {
   }, [page])
 
   useEffect(() => {
-    // Obeserva o elemento sentilena, quando encontra-o
-    // muda o valor da pagina para que seja feito uma nova requisição
+    // Observe the sentinel element, when it's finded
+    // change the page's value to do a new request
     const intersectionObserver = new IntersectionObserver((entries) => {
       
       if(entries.some((entry) => entry.isIntersecting)){
