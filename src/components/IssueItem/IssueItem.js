@@ -41,7 +41,6 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       setRateLoading(false);
     }
   };
-
   return (
     <Box className={classes.listItem}>
       {askForLoginVisible ? <AskForLogin /> : null}

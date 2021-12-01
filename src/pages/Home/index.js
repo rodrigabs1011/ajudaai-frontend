@@ -17,22 +17,41 @@ import serverDown from "../../assets/serverDown.svg";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
+  const [page, setPage] = useState(1);
 
   const { issueFormVisible, issues, setIssues } = useContext(GlobalContext);
-
   const classes = useStyles();
 
   useEffect(() => {
-    getIssues(); // eslint-disable-next-line
-  }, []);
+    getIssues(page); //eslint-disable-next-line
+  }, [page])
 
-  const getIssues = async () => {
+  useEffect(() => {
+    // Observe the sentinel element, when it's finded
+    // change the page's value to do a new request
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      
+      if(entries.some((entry) => entry.isIntersecting)){
+        setPage((currentPageInsideState) => currentPageInsideState + 1);
+      }
+    });
+
+    intersectionObserver.observe(document.querySelector('#sentinela'));
+
+    return () => intersectionObserver.disconnect();
+
+  }, [])
+  
+  const getIssues = async (page) => {
     try {
-      setLoading(true);
       setError(undefined);
-      const issues = await IssuesService.getAllIssues();
-      if (issues) setIssues(issues);
+      const issues = await IssuesService.getAllIssues(page);
+      if (issues) setIssues(prevIssues =>{
+        return [...new Set([...prevIssues, ...issues.results])];
+      });
+      setError(false);
     } catch (e) {
+      if(issues.length > 0) return;
       setError(e.message);
     } finally {
       setLoading(false);
@@ -73,13 +92,16 @@ const Home = () => {
                 ) : null}
               </Grid>
             </Grid>
-            <Grid container className={classes.marginBottom}>
-              <IssueList data={issues} loading={loading} error={error} handleUpdateItem={handleUpdateItem} />
-            </Grid>
+              <Grid container className={classes.marginBottom}>
+                <IssueList  data={issues} loading={loading} error={error} handleUpdateItem={handleUpdateItem}/>
+              </Grid>  
           </>
         )}
       </main>
+      <div id="sentinela"></div>
+
       <Footer />
+      
     </>
   );
 };
