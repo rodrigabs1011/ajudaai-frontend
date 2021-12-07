@@ -16,8 +16,7 @@ const Footer = () => {
         spacing={2}
         direction="row"
         justifyContent="center"
-        alignItems="center"
-      >
+        alignItems="center">
         <Typography variant="body1" color="textSecondary">
           AJUDAAÍ, 2021. Imagens cortesia de{" "}
           <Link
@@ -25,8 +24,7 @@ const Footer = () => {
             onClick={(e) => {
               e.preventDefault();
               window.open("https://undraw.co/illustrations");
-            }}
-          >
+            }}>
             Undraw
           </Link>
         </Typography>

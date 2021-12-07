@@ -33,14 +33,14 @@ const AskForLogin = (props) => {
       open={askForLoginVisible}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
+      aria-describedby="alert-dialog-description">
       <DialogTitle id="alert-dialog-title">
         {"Deseja fazer o login?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Deseja fazer o login para interagir ou quer continuar de maneira anonima?
+          Deseja fazer o login para interagir ou quer continuar de maneira
+          anonima?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -52,8 +52,7 @@ const AskForLogin = (props) => {
           to={`/login/`}
           onClick={handleClose}
           color="primary"
-          autoFocus
-        >
+          autoFocus>
           Fazer Login
         </Button>
       </DialogActions>

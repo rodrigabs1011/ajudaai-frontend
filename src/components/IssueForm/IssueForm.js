@@ -120,8 +120,7 @@ const FormComplementar = ({
           <Typography
             variant="h6"
             color="textSecondary"
-            className={classes.relatedItemsTitle}
-          >
+            className={classes.relatedItemsTitle}>
             Dá uma olhada se seu ajuda aí já não foi postado!
           </Typography>
           <Typography variant="body1" color="textSecondary">
@@ -143,13 +142,11 @@ const FormComplementar = ({
                   onClick={(e) => {
                     e.preventDefault();
                     window.open(`/issues/${item.slug}/`);
-                  }}
-                >
+                  }}>
                   <Typography
                     className={classes.relatedItemContent}
                     variant="body1"
-                    color="primary"
-                  >
+                    color="primary">
                     {item.title}
                   </Typography>
                   <Divider />
@@ -173,8 +170,7 @@ const FormComplementar = ({
               <Typography
                 variant="body1"
                 color="textSecondary"
-                className={classes.motivationalText}
-              >
+                className={classes.motivationalText}>
                 Você pode postar algo que não está legal e assim contribui com a
                 solução!
               </Typography>
@@ -263,7 +259,9 @@ const IssueForm = ({ callback }) => {
       setFormImageError("Apenas um arquivo de imagem permitido!");
     } // eslint-disable-next-line
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+  });
 
   return (
     <Grid container spacing={5}>
@@ -311,8 +309,7 @@ const IssueForm = ({ callback }) => {
                   disabled={
                     formData.title.length === 0 ||
                     formData.description.length === 0
-                  }
-                >
+                  }>
                   Próximo
                 </Button>
               </Box>
@@ -334,8 +331,7 @@ const IssueForm = ({ callback }) => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 {formData.imageSrc ? (
                   <img
                     width={100}
@@ -363,8 +359,7 @@ const IssueForm = ({ callback }) => {
                     setWizardStep(wizardStep - 1);
                     setWizardLabel(labels[wizardStep - 1]);
                   }}
-                  className={classes.marginRight}
-                >
+                  className={classes.marginRight}>
                   Voltar
                 </Button>
                 <Button
@@ -373,8 +368,7 @@ const IssueForm = ({ callback }) => {
                   onClick={() => {
                     setWizardStep(wizardStep + 1);
                     setWizardLabel(labels[wizardStep + 1]);
-                  }}
-                >
+                  }}>
                   Próximo
                 </Button>
               </Box>
@@ -408,11 +402,14 @@ const IssueForm = ({ callback }) => {
                   onClick={() => {
                     setWizardStep(wizardStep - 1);
                     setWizardLabel(labels[wizardStep - 1]);
-                  }}
-                >
+                  }}>
                   Voltar
                 </Button>
-                <Button variant="contained" color="primary" type="submit" disabled={formLoading}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={formLoading}>
                   Postar
                 </Button>
               </Box>
@@ -427,8 +424,7 @@ const IssueForm = ({ callback }) => {
         md={6}
         lg={6}
         xl={6}
-        className={classes.motivationalGrid}
-      >
+        className={classes.motivationalGrid}>
         <FormComplementar
           similarIssues={similarIssues}
           similarIssuesLoading={similarIssuesLoading}

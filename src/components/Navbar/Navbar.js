@@ -16,9 +16,8 @@ import useStyles from "./styles";
 
 const NavBar = () => {
   const classes = useStyles();
-  const { issueFormVisible, setIssueFormVisible, isAuthenticated } = useContext(
-    GlobalContext
-  );
+  const { issueFormVisible, setIssueFormVisible, isAuthenticated } =
+    useContext(GlobalContext);
 
   const closeIssueForm = () => {
     setIssueFormVisible(false);
@@ -53,8 +52,7 @@ const NavBar = () => {
           spacing={2}
           direction="row"
           justifyContent="space-between"
-          alignItems="center"
-        >
+          alignItems="center">
           {issueFormVisible ? (
             <>
               <IconButton onClick={closeIssueForm}>
@@ -84,8 +82,7 @@ const NavBar = () => {
                   variant="contained"
                   color="primary"
                   onClick={openIssueForm}
-                  endIcon={<MarkunreadMailboxIcon />}
-                >
+                  endIcon={<MarkunreadMailboxIcon />}>
                   POSTAR
                 </Button>
               </div>

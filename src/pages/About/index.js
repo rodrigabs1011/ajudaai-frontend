@@ -9,7 +9,12 @@ export default class About extends Component {
         <NavBar />
         <main className="container color-gray-700">
           <h2>Sobre</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, sequi error ipsam beatae explicabo natus fugit voluptate. Nam beatae reiciendis, vel eum, quaerat sunt veritatis officiis consectetur ipsam repellat dignissimos.</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, sequi
+            error ipsam beatae explicabo natus fugit voluptate. Nam beatae
+            reiciendis, vel eum, quaerat sunt veritatis officiis consectetur
+            ipsam repellat dignissimos.
+          </p>
         </main>
       </>
     );

@@ -1,14 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 import { defaultAnimDuration } from "../../utils/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.default,
-    width: '100%',
-    position: 'fixed',
+    width: "100%",
+    position: "fixed",
     zIndex: 16,
-    boxShadow: '0px 4px 8px 0px #0000001F',
+    boxShadow: "0px 4px 8px 0px #0000001F",
   },
   fixedHeader: {
     background: theme.palette.background.default,
@@ -17,35 +17,35 @@ const useStyles = makeStyles((theme) => ({
     transition: `all ${defaultAnimDuration}`,
   },
   nav: {
-    padding: '34px 89px',
+    padding: "34px 89px",
   },
   brandWrapper: {
-    display: 'flex',
+    display: "flex",
   },
   brandImage: {
     marginRight: theme.spacing(1),
-    height: '20px',
+    height: "20px",
   },
   brandText: {
     color: theme.palette.primary.main,
-    letterSpacing: '.15px',
-    fontSize: '20px',
-    fontWeight: '500',
+    letterSpacing: ".15px",
+    fontSize: "20px",
+    fontWeight: "500",
     marginRight: theme.spacing(1),
   },
   navList: {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: theme.spacing(2)
+    display: "flex",
+    alignItems: "center",
+    marginRight: theme.spacing(2),
   },
   navItem: {
     color: theme.palette.text.secondary,
     margin: `0 ${theme.spacing(1)}px`,
   },
   row: {
-    display: 'flex',
-    alignItems: 'center',
-  }
+    display: "flex",
+    alignItems: "center",
+  },
 }));
 
 export default useStyles;

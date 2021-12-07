@@ -38,8 +38,7 @@ const IssueList = (props) => {
         <Typography
           variant="h6"
           color="primary"
-          className={classes.marginBottom}
-        >
+          className={classes.marginBottom}>
           Nenhum ajuda aí por aqui!
         </Typography>
         <img src={empty} alt="Nenhum(a)" width="50%" />
