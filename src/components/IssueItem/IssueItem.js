@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
+// import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import SmsIcon from "@material-ui/icons/Sms";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+// import SmsIcon from "@material-ui/icons/Sms";
+// import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import useStyles from "./styles";
 import IssuesService from "../../services/issues";
@@ -21,7 +21,7 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
-  const { isAnonymous, isAuthenticated, askForLoginVisible, setAskForLoginVisible } = useContext(GlobalContext);
+  const { isAnonymous, isAuthenticated, setAskForLoginVisible } = useContext(GlobalContext);
 
   const [rateLoading, setRateLoading] = useState(false);
 

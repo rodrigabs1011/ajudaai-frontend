@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
+// import Box from "@material-ui/core/Box";
+// import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+// import TextField from "@material-ui/core/TextField";
+// import Typography from "@material-ui/core/Typography";
 
 import NavBar from "../../components/Navbar";
 import ErrorMsg from "../../components/ErrorMsg";
@@ -12,7 +12,7 @@ import IssueForm from "../../components/IssueForm";
 import IssueItem from "../../components/IssueItem";
 
 import IssuesService from "../../services/issues";
-import CommentsService from "../../services/comments";
+// import CommentsService from "../../services/comments";
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
@@ -25,18 +25,17 @@ const IssueDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const [comments, setComments] = useState([]);
-  const [commentsLoading, setCommentsLoading] = useState(true);
-  const [commentsError, setCommentsError] = useState();
+  // const [comments, setComments] = useState([]);
+  // const [commentsLoading, setCommentsLoading] = useState(true);
+  // const [commentsError, setCommentsError] = useState();
 
-  const [commentary, setCommentary] = useState("");
-  const [commentaryLoading, setCommentaryLoading] = useState(false);
-  const [commentaryError, setCommentaryError] = useState(error);
+  // const [commentary, setCommentary] = useState("");
+  // const [commentaryLoading, setCommentaryLoading] = useState(false);
+  // const [commentaryError, setCommentaryError] = useState(error);
 
   const { issueFormVisible } = useContext(GlobalContext);
 
-  const commentaryInputRef = useRef(null);
-
+  // const commentaryInputRef = useRef(null);
 
   const classes = useStyles();
 
@@ -56,43 +55,43 @@ const IssueDetail = () => {
     setIssue(data);
   };
 
-  const getComments = async () => {
-    try {
-      setCommentsLoading(true);
-      setCommentsError(undefined);
-      const comments = await IssuesService.getIssueComments(slug);
-      if (comments) setComments(comments);
-    } catch (e) {
-      setCommentsError(e.message);
-    } finally {
-      setCommentsLoading(false);
-    }
-  };
+  // const getComments = async () => {
+  //   try {
+  //     setCommentsLoading(true);
+  //     setCommentsError(undefined);
+  //     const comments = await IssuesService.getIssueComments(slug);
+  //     if (comments) setComments(comments);
+  //   } catch (e) {
+  //     setCommentsError(e.message);
+  //   } finally {
+  //     setCommentsLoading(false);
+  //   }
+  // };
 
-  const handleChange = (e) => {
-    setCommentary(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setCommentary(e.target.value);
+  // };
 
-  const handleSubmit = async () => {
-    try {
-      setCommentaryLoading(true);
-      setCommentaryError(undefined);
-      const data = await CommentsService.addCommentary({issue: issue.id, text: commentary, user: 0 });
-    } catch(e) {
-      setCommentaryError(e.message);
-    } finally {
-      setCommentaryLoading(false);
-    }
-  };
+  // const handleSubmit = async () => {
+  //   try {
+  //     setCommentaryLoading(true);
+  //     setCommentaryError(undefined);
+  //     const data = await CommentsService.addCommentary({issue: issue.id, text: commentary, user: 0 });
+  //   } catch(e) {
+  //     setCommentaryError(e.message);
+  //   } finally {
+  //     setCommentaryLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
-
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('action') === 'comment') {
+    if (urlParams.get("action") === "comment") {
       // focusComentaryInput
     }
     getIssue();
-    getComments(); // eslint-disable-next-line
+    // getComments();
+    // eslint-disable-next-line
   }, []);
 
   return (
