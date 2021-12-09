@@ -26,26 +26,26 @@ const HomeSkeleton = () => {
           <Skeleton
             variant="rect"
             className={classes.skeletonItem}
-            width={165}
-            height={128}
+            width={280}
+            height={150}
           />
           <Skeleton
             variant="rect"
             className={classes.skeletonItem}
-            width={165}
-            height={128}
+            width={280}
+            height={150}
           />
           <Skeleton
             variant="rect"
             className={classes.skeletonItem}
-            width={165}
-            height={128}
+            width={280}
+            height={150}
           />
           <Skeleton
             variant="rect"
             className={classes.skeletonItem}
-            width={165}
-            height={128}
+            width={280}
+            height={150}
           />
         </div>
       </Grid>

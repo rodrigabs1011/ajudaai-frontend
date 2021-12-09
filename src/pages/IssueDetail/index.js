@@ -124,7 +124,7 @@ const IssueDetail = () => {
                 <Grid container className={classes.issueContent}>
                   <IssueItem item={issue} handleUpdateItem={handleUpdateItem} />
                 </Grid>
-                <Grid
+                {/* <Grid
                   container
                   direction="column"
                   className={classes.comentaryRoot}
@@ -175,7 +175,7 @@ const IssueDetail = () => {
                       )}
                     </Box>
                   )}
-                </Grid>
+                </Grid> */}
               </>
             )}
           </>

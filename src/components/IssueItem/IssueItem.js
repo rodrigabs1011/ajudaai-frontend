@@ -65,13 +65,13 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       </Box>
 
       <div className={classes.relevanceWrapper}>
-        <IconButton
+        {/* <IconButton
           onClick={() => {}}
           component={Link}
           to={`/issues/${item.slug}/?action=comment`}
         >
           <SmsIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
         {item.vote === null ? (
           <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
         ) : null}
@@ -82,9 +82,9 @@ const IssueItem = ({ item, handleUpdateItem }) => {
           <Downvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
         ) : null}
 
-        <IconButton onClick={() => {}}>
+        {/* <IconButton onClick={() => {}}>
           <ErrorOutlineIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
       </div>
       <Divider />
     </Box>

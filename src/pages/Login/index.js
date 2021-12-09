@@ -31,7 +31,7 @@ const Login = () => {
       setLoading(true);
       setError(undefined);
       const data = await AuthService.signin(formData);
-      localStorage.setItem("AJUDAAI_SESSION_TOKEN", data.token);
+      localStorage.setItem("AJUDAAI-SESSION-TOKEN", data.token);
       setIsAuthenticated(true);
     } catch (error) {
       setError(error.message);
@@ -48,6 +48,8 @@ const Login = () => {
         container
         spacing={2}
         direction="column"
+        alignItems="center"
+        justifyContent="center"
       >
         <Grid item xl={6} lg={6}>
           <ErrorMsg error={error} />
@@ -65,9 +67,9 @@ const Login = () => {
               name="username"
               placeholder="Usuário"
               onChange={handleChange}
+              variant="outlined"
               margin="dense"
               required
-
             />
 
             <TextField
@@ -76,10 +78,11 @@ const Login = () => {
               name="password"
               placeholder="Senha"
               onChange={handleChange}
+              variant="outlined"
               margin="dense"
               required
             />
-            <Button variant="contained" color="primary" disabled={loading} type="submit">
+            <Button variant="contained" color="primary" disabled={loading} type="submit" className={classes.loginSubmit}>
               Entrar
             </Button>
           </form>

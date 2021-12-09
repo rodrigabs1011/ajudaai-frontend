@@ -17,7 +17,7 @@ const Routes = () => {
 
   useEffect(() => {
     setIsAuthenticated(
-      localStorage.getItem("AJUDAAI_SESSION_TOKEN") ? true : false
+      localStorage.getItem("AJUDAAI-SESSION-TOKEN") ? true : false
     ); // eslint-disable-next-line
   }, []);
 

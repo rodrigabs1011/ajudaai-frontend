@@ -11,7 +11,7 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 
 const AskForLogin = (props) => {
   const {
-    isAnonymous,
+    //isAnonymous,
     setIsAnonymous,
     setAskForLoginVisible,
     askForLoginVisible,
@@ -40,7 +40,7 @@ const AskForLogin = (props) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Deseja fazer o login para comentar ou quer continuar de maneira anonima?
+          Deseja fazer o login para interagir ou quer continuar de maneira anonima?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

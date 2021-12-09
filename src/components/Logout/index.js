@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 class Logout extends Component {
   handleLogout = () => {
-    localStorage.removeItem("AJUDAAI_SESSION_TOKEN");
+    localStorage.removeItem("AJUDAAI-SESSION-TOKEN");
     window.location = "/";
   };
 
