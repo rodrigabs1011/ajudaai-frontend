@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { BASE_API_URL } from "../utils/urls";
-import { headers, get_or_create_token } from "../utils/core";
+import { headers } from "../utils/core";
 
 export class CommentsService {
   constructor() {

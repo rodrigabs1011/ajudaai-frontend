@@ -33,7 +33,7 @@ const Upvoted = ({ item, handleRate, rateLoading }) => {
     <Button
       className={classes.relevance}
       onClick={() => {
-        handleRate(item.id, true);
+        handleRate(true);
       }}
       disabled={rateLoading}
     >

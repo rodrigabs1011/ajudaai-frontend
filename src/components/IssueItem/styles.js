@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
   },
   listItem: {
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(6),
+    padding: theme.spacing(3),
     width: '100%',
   },
   captionWrapper: {

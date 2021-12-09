@@ -10,12 +10,14 @@ import Login from "../pages/Login";
 import IssueDetail from "../pages/IssueDetail";
 import ServerError from "../pages/ServerError";
 
+import AskForLogin from "../components/AskForLogin";
+
 const Routes = () => {
-  const { setIsAuthenticated } = useContext(GlobalContext);
+  const { setIsAuthenticated, askForLoginVisible } = useContext(GlobalContext);
 
   useEffect(() => {
     setIsAuthenticated(
-      localStorage.getItem("AJUDAAI_SESSION_TOKEN") ? true : false
+      localStorage.getItem("AJUDAAI-SESSION-TOKEN") ? true : false
     ); // eslint-disable-next-line
   }, []);
 
@@ -25,10 +27,11 @@ const Routes = () => {
         <Route exact path="/about/" component={About} />
         <Route exact path="/login/" component={Login} />
         <Route exact path="/" component={Home} />
-        <Route exact path="/issues/:id/" component={IssueDetail} />
+        <Route exact path="/issues/:slug/" component={IssueDetail} />
         <Route exact path="/500" component={ServerError} />
         <Route component={NotFound} />
       </Switch>
+      {askForLoginVisible ? <AskForLogin /> : null}
     </Fragment>
   );
 };

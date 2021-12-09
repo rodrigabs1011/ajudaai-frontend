@@ -16,8 +16,8 @@ export class IssuesService {
     return data;
   }
 
-  async getIssueById(id) {
-    const { data } = await this.apiRef.get(`/issues/${id}/?token=${get_or_create_token()}`);
+  async getIssueBySlug(slug) {
+    const { data } = await this.apiRef.get(`/issues/${slug}/?token=${get_or_create_token()}`);
     return data;
   }
 
@@ -33,16 +33,16 @@ export class IssuesService {
     return data;
   }
 
-  async rateIssue(id, upvote) {
-    const { data } = await this.apiRef.post(`/issues/${id}/rate/`, {
+  async rateIssue(slug, upvote) {
+    const { data } = await this.apiRef.post(`/issues/${slug}/rate/`, {
       upvote,
       token: get_or_create_token(),
     });
     return data;
   }
 
-  async getIssueComments(id) {
-    const { data } = await this.apiRef.get(`/issues/${id}/comments/?token=${get_or_create_token()}`);
+  async getIssueComments(slug) {
+    const { data } = await this.apiRef.get(`/issues/${slug}/comments/?token=${get_or_create_token()}`);
     return data;
   }
 }

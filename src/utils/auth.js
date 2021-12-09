@@ -1,3 +1,3 @@
-export const isAuthenticated = localStorage.getItem("AJUDAAI_SESSION_TOKEN")
+export const isAuthenticated = localStorage.getItem("AJUDAAI-SESSION-TOKEN")
   ? true
   : false;

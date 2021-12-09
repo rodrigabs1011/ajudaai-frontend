@@ -139,10 +139,10 @@ const FormComplementar = ({
                 <Link
                   key={item.id}
                   className={classes.similarIssueItem}
-                  to={`/issues/${item.id}/`}
+                  to={`/issues/${item.slug}/`}
                   onClick={(e) => {
                     e.preventDefault();
-                    window.open(`/issues/${item.id}/`);
+                    window.open(`/issues/${item.slug}/`);
                   }}
                 >
                   <Typography

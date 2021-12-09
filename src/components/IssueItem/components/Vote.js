@@ -29,7 +29,7 @@ const Vote = ({item, handleRate, rateLoading}) => {
       <IconButton
         disabled={rateLoading}
         onClick={() => {
-          handleRate(item.id, true);
+          handleRate(true);
         }}
       >
         <ThumbUpIcon className={classes.relevanceIcon} />
@@ -40,7 +40,7 @@ const Vote = ({item, handleRate, rateLoading}) => {
       <IconButton
         disabled={rateLoading}
         onClick={() => {
-          handleRate(item.id, false);
+          handleRate(false);
         }}
       >
         <ThumbDownIcon className={classes.relevanceIcon} />

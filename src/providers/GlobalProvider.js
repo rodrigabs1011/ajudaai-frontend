@@ -7,6 +7,7 @@ const GlobalProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [askForLoginVisible, setAskForLoginVisible] = useState(false);
+  // const [afterAskAction, setAfterAskAction] = useState({type: null, data: {}});
   const [issues, setIssues] = useState([]);
 
   return (

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: '#fff',
+    background: '#fafafa',
     width: '100%',
     padding: theme.spacing(3),
     display: 'flex',

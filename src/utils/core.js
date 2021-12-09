@@ -2,9 +2,9 @@ let headers = {
   "Content-type": "application/json",
 };
 
-if (localStorage.getItem("AJUDAAI_SESSION_TOKEN")) {
+if (localStorage.getItem("AJUDAAI-SESSION-TOKEN")) {
   headers["Authorization"] = `Token ${localStorage.getItem(
-    "AJUDAAI_SESSION_TOKEN"
+    "AJUDAAI-SESSION-TOKEN"
   )}`;
 }
 
@@ -19,14 +19,22 @@ export function sort_by_key(array, key) {
 }
 
 export function get_or_create_token() {
-  if (!localStorage.getItem("AJUDAAI-SESSION-TOKEN")) {
+  if (!localStorage.getItem("AJUDAAI-CLIENT-TOKEN")) {
     localStorage.setItem(
-      "AJUDAAI-SESSION-TOKEN",
+      "AJUDAAI-CLIENT-TOKEN",
       Math.random().toString(36).substr(2) +
         Math.random().toString(36).substr(2)
     );
   }
-  return localStorage.getItem("AJUDAAI-SESSION-TOKEN");
+  return localStorage.getItem("AJUDAAI-CLIENT-TOKEN");
+}
+
+export function handleAskForLogin({isAnonymous, isAuthenticated, setAskForLoginVisible}) {
+  if(!isAnonymous && !isAuthenticated) {
+    setAskForLoginVisible(true);
+    return false;
+  }
+  return true;
 }
 
 export const defaultAnimDuration = ".4s";
