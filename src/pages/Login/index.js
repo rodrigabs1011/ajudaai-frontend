@@ -49,8 +49,7 @@ const Login = () => {
         spacing={2}
         direction="column"
         alignItems="center"
-        justifyContent="center"
-      >
+        justifyContent="center">
         <Grid item xl={6} lg={6}>
           <ErrorMsg error={error} />
         </Grid>
@@ -82,7 +81,12 @@ const Login = () => {
               margin="dense"
               required
             />
-            <Button variant="contained" color="primary" disabled={loading} type="submit" className={classes.loginSubmit}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              type="submit"
+              className={classes.loginSubmit}>
               Entrar
             </Button>
           </form>

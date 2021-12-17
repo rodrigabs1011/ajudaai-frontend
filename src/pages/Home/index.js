@@ -24,34 +24,33 @@ const Home = () => {
 
   useEffect(() => {
     getIssues(page); //eslint-disable-next-line
-  }, [page])
+  }, [page]);
 
   useEffect(() => {
     // Observe the sentinel element, when it's finded
     // change the page's value to do a new request
     const intersectionObserver = new IntersectionObserver((entries) => {
-      
-      if(entries.some((entry) => entry.isIntersecting)){
+      if (entries.some((entry) => entry.isIntersecting)) {
         setPage((currentPageInsideState) => currentPageInsideState + 1);
       }
     });
 
-    intersectionObserver.observe(document.querySelector('#sentinela'));
+    intersectionObserver.observe(document.querySelector("#sentinela"));
 
     return () => intersectionObserver.disconnect();
+  }, []);
 
-  }, [])
-  
   const getIssues = async (page) => {
     try {
       setError(undefined);
       const issues = await IssuesService.getAllIssues(page);
-      if (issues) setIssues(prevIssues =>{
-        return [...new Set([...prevIssues, ...issues.results])];
-      });
+      if (issues)
+        setIssues((prevIssues) => {
+          return [...new Set([...prevIssues, ...issues.results])];
+        });
       setError(false);
     } catch (e) {
-      if(issues.length > 0) return;
+      if (issues.length > 0) return;
       setError(e.message);
     } finally {
       setLoading(false);
@@ -68,7 +67,7 @@ const Home = () => {
       return issue;
     });
     setIssues(auxIssues);
-  }
+  };
 
   return (
     <>
@@ -92,16 +91,20 @@ const Home = () => {
                 ) : null}
               </Grid>
             </Grid>
-              <Grid container className={classes.marginBottom}>
-                <IssueList  data={issues} loading={loading} error={error} handleUpdateItem={handleUpdateItem}/>
-              </Grid>  
+            <Grid container className={classes.marginBottom}>
+              <IssueList
+                data={issues}
+                loading={loading}
+                error={error}
+                handleUpdateItem={handleUpdateItem}
+              />
+            </Grid>
           </>
         )}
       </main>
       <div id="sentinela"></div>
 
       <Footer />
-      
     </>
   );
 };

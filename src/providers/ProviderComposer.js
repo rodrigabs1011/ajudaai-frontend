@@ -1,7 +1,5 @@
-
 import React from "react";
-import GlobalProvider from './GlobalProvider';
-
+import GlobalProvider from "./GlobalProvider";
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -15,9 +13,7 @@ function ProviderComposer({ contexts, children }) {
 
 function MasterProvider({ children }) {
   return (
-    <ProviderComposer
-      contexts={[<GlobalProvider />]}
-    >
+    <ProviderComposer contexts={[<GlobalProvider />]}>
       {children}
     </ProviderComposer>
   );

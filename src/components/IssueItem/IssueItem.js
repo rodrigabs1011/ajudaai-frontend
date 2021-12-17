@@ -14,19 +14,22 @@ import Vote from "./components/Vote";
 import Upvoted from "./components/Upvoted";
 import Downvoted from "./components/Downvoted";
 
-import { handleAskForLogin } from '../../utils/core';
+import { handleAskForLogin } from "../../utils/core";
 
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
-  const { isAnonymous, isAuthenticated, setAskForLoginVisible } = useContext(GlobalContext);
+  const { isAnonymous, isAuthenticated, setAskForLoginVisible } =
+    useContext(GlobalContext);
 
   const [rateLoading, setRateLoading] = useState(false);
 
   const handleRate = async (upvote) => {
-    if (handleAskForLogin({isAnonymous, isAuthenticated, setAskForLoginVisible})) {
+    if (
+      handleAskForLogin({ isAnonymous, isAuthenticated, setAskForLoginVisible })
+    ) {
       try {
         setRateLoading(true);
         const data = await IssuesService.rateIssue(item.slug, upvote);
@@ -48,8 +51,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       <Typography
         variant="body1"
         color="textSecondary"
-        style={{ textJustify: "justify" }}
-      >
+        style={{ textJustify: "justify" }}>
         {item.description.length > 28
           ? `${item.description.slice(0, 27).trim()}...`
           : item.description}
@@ -76,10 +78,18 @@ const IssueItem = ({ item, handleUpdateItem }) => {
           <Vote item={item} rateLoading={rateLoading} handleRate={handleRate} />
         ) : null}
         {item.vote === true ? (
-          <Upvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
+          <Upvoted
+            item={item}
+            rateLoading={rateLoading}
+            handleRate={handleRate}
+          />
         ) : null}
         {item.vote === false ? (
-          <Downvoted item={item} rateLoading={rateLoading} handleRate={handleRate} />
+          <Downvoted
+            item={item}
+            rateLoading={rateLoading}
+            handleRate={handleRate}
+          />
         ) : null}
 
         {/* <IconButton onClick={() => {}}>

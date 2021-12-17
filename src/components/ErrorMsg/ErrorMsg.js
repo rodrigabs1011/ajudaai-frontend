@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 
 import { defaultAnimDuration } from "../../utils/core.js";
 
-
 const ErrorMsg = (props) => {
   return (
     <div
@@ -12,8 +11,7 @@ const ErrorMsg = (props) => {
         paddingBottom: "13px",
         overflow: "hidden",
         transition: `all ${defaultAnimDuration}`,
-      }}
-    >
+      }}>
       {props.error ? (
         <Typography variant="body1" color="error">
           {props.error}

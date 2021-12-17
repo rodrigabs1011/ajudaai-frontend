@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     marginBottom: theme.spacing(6),
     padding: theme.spacing(3),
-    width: '100%',
+    width: "100%",
   },
   captionWrapper: {
     display: "flex",
@@ -22,22 +22,22 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
   },
   relevanceWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(2),
   },
   relevance: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     border: `solid 1px ${theme.palette.text.disabled}`,
-    borderRadius: '20px',
-    maxHeight: '38px',
+    borderRadius: "20px",
+    maxHeight: "38px",
   },
   relevanceIcon: {
-    fontSize: '16px',
+    fontSize: "16px",
   },
   marginBottom: {
     marginBottom: theme.spacing(2),

@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles((theme) => ({
   wizardWrapper: {
     display: "flex",
-    flexDirection: 'column',
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -48,7 +48,6 @@ const WizardSteps = ({ label, current, steps }) => {
       </Typography>
       <Box className={classes.stepsWrapper}>
         {Array.from(Array(steps).keys()).map((step) => {
-
           if (step < current) {
             return <Box key={step} className={classes.previousStep}></Box>;
           }

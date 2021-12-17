@@ -23,8 +23,7 @@ const GlobalProvider = (props) => {
         setIsAnonymous,
         askForLoginVisible,
         setAskForLoginVisible,
-      }}
-    >
+      }}>
       {props.children}
     </GlobalContext.Provider>
   );

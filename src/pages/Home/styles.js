@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "13px",
   },
   emptyBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 }));
 
