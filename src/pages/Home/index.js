@@ -43,7 +43,7 @@ const Home = () => {
   const getIssues = async (page) => {
     try {
       setError(undefined);
-      const issues = await IssuesService.getAllIssues(page);
+      const issues = await IssuesService.getIssues(page);
       if (issues)
         setIssues((prevIssues) => {
           return [...new Set([...prevIssues, ...issues.results])];

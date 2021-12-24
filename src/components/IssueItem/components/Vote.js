@@ -28,7 +28,8 @@ const Vote = ({ item, handleRate, rateLoading }) => {
         disabled={rateLoading}
         onClick={() => {
           handleRate(true);
-        }}>
+        }}
+      >
         <ThumbUpIcon className={classes.relevanceIcon} />
       </IconButton>
       <Typography variant="button" color="textSecondary">
@@ -38,7 +39,8 @@ const Vote = ({ item, handleRate, rateLoading }) => {
         disabled={rateLoading}
         onClick={() => {
           handleRate(false);
-        }}>
+        }}
+      >
         <ThumbDownIcon className={classes.relevanceIcon} />
       </IconButton>
     </div>

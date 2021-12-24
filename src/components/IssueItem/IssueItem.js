@@ -21,15 +21,12 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
-  const { isAnonymous, isAuthenticated, setAskForLoginVisible } =
-    useContext(GlobalContext);
+  const { isAuthenticated, setAskForLoginVisible } = useContext(GlobalContext);
 
   const [rateLoading, setRateLoading] = useState(false);
 
   const handleRate = async (upvote) => {
-    if (
-      handleAskForLogin({ isAnonymous, isAuthenticated, setAskForLoginVisible })
-    ) {
+    if (handleAskForLogin({ isAuthenticated, setAskForLoginVisible })) {
       try {
         setRateLoading(true);
         const data = await IssuesService.rateIssue(item.slug, upvote);
@@ -51,7 +48,8 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       <Typography
         variant="body1"
         color="textSecondary"
-        style={{ textJustify: "justify" }}>
+        style={{ textJustify: "justify" }}
+      >
         {item.description.length > 28
           ? `${item.description.slice(0, 27).trim()}...`
           : item.description}

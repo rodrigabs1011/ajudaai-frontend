@@ -11,7 +11,8 @@ const ErrorMsg = (props) => {
         paddingBottom: "13px",
         overflow: "hidden",
         transition: `all ${defaultAnimDuration}`,
-      }}>
+      }}
+    >
       {props.error ? (
         <Typography variant="body1" color="error">
           {props.error}

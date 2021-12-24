@@ -10,10 +10,8 @@ export class IssuesService {
     });
   }
 
-  async getAllIssues(page = 1) {
-    const { data } = await this.apiRef.get(
-      `/issues/?page=${page}&token=${get_or_create_token()}`
-    );
+  async getIssues(page = 1) {
+    const { data } = await this.apiRef.get(`/issues/?page=${page}`);
     return data;
   }
 
@@ -28,7 +26,7 @@ export class IssuesService {
     // const { data } = await this.apiRef.get(`/issues/findRelated/?description=${payload.description}`);
     // const { data } = await this.apiRef.post(`/issues/findRelated/`, payload);
     const { data } = await this.apiRef.get(`/issues/`);
-    return data.slice(0, 3);
+    return data.results.slice(0, 3);
   }
 
   async addIssue(payload) {
