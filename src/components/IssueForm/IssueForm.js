@@ -18,7 +18,7 @@ import WizardSteps from "../WizardSteps";
 import ErrorMsg from "../ErrorMsg";
 import requestFormIllustration from "../../assets/requestFormIllustration.svg";
 
-const labels = ["Informações Iniciais", "A melhor Imagem", "Resumo"];
+const labels = ["A melhor Imagem", "Informações Iniciais", "Resumo"];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -185,7 +185,7 @@ const FormComplementar = ({
 const IssueForm = ({ callback }) => {
   const classes = useStyles();
   const { setIssueFormVisible } = useContext(GlobalContext);
-  const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
+  const [wizardLabel, setWizardLabel] = useState("A melhor Imagem");
   const [wizardStep, setWizardStep] = useState(0);
 
   const [formData, setFormData] = useState({
@@ -274,50 +274,6 @@ const IssueForm = ({ callback }) => {
           {wizardStep === 0 ? (
             <>
               <Typography variant="h6" color="textSecondary">
-                Conte-nos o que você encontrou!
-              </Typography>
-              <TextField
-                id="title"
-                name="title"
-                label="Título"
-                variant="outlined"
-                margin="dense"
-                fullWidth
-                value={formData.title}
-                onChange={handleChange}
-              />
-              <TextField
-                id="description"
-                name="description"
-                label="Descrição"
-                variant="outlined"
-                margin="dense"
-                fullWidth
-                value={formData.description}
-                onChange={handleChange}
-              />
-
-              <Box className={classes.actionsWrapper}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setWizardStep(wizardStep + 1);
-                    setWizardLabel(labels[1]);
-                    getSimilarIssues();
-                  }}
-                  disabled={
-                    formData.title.length === 0 ||
-                    formData.description.length === 0
-                  }>
-                  Próximo
-                </Button>
-              </Box>
-            </>
-          ) : null}
-          {wizardStep === 1 ? (
-            <>
-              <Typography variant="h6" color="textSecondary">
                 Você tem uma imagem?
               </Typography>
               <ErrorMsg error={formImageError} />
@@ -369,6 +325,50 @@ const IssueForm = ({ callback }) => {
                     setWizardStep(wizardStep + 1);
                     setWizardLabel(labels[wizardStep + 1]);
                   }}>
+                  Próximo
+                </Button>
+              </Box>
+            </>
+          ) : null}
+          {wizardStep === 1 ? (
+            <>
+              <Typography variant="h6" color="textSecondary">
+                Conte-nos o que você encontrou!
+              </Typography>
+              <TextField
+                id="title"
+                name="title"
+                label="Título"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.title}
+                onChange={handleChange}
+              />
+              <TextField
+                id="description"
+                name="description"
+                label="Descrição"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.description}
+                onChange={handleChange}
+              />
+
+              <Box className={classes.actionsWrapper}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setWizardStep(wizardStep + 1);
+                    setWizardLabel(labels[1]);
+                    getSimilarIssues();
+                  }}
+                  disabled={
+                    formData.title.length === 0 ||
+                    formData.description.length === 0
+                  }>
                   Próximo
                 </Button>
               </Box>
