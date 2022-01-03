@@ -27,8 +27,8 @@ export class IssuesService {
   async getSimilarIssues(payload) {
     // const { data } = await this.apiRef.get(`/issues/findRelated/?description=${payload.description}`);
     // const { data } = await this.apiRef.post(`/issues/findRelated/`, payload);
-    const { data } = await this.apiRef.get(`/issues/`);
-    return data.slice(0, 3);
+    const { data } = await this.apiRef.post(`/issues/search/`, payload);
+    return data.results.slice(0, 3);
   }
 
   async addIssue(payload) {
