@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 // import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 // import SmsIcon from "@material-ui/icons/Sms";
 // import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
@@ -18,6 +19,8 @@ import { handleAskForLogin } from "../../utils/core";
 
 import { GlobalContext } from "../../providers/GlobalProvider";
 
+import DefaultImage from "../../assets/defaultIssueImage.svg";
+
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
@@ -25,6 +28,8 @@ const IssueItem = ({ item, handleUpdateItem }) => {
     useContext(GlobalContext);
 
   const [rateLoading, setRateLoading] = useState(false);
+
+  const [image, setImage] = useState();
 
   const handleRate = async (upvote) => {
     if (
@@ -45,17 +50,45 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   };
   return (
     <Box className={classes.listItem}>
-      <Typography variant="h6" color="primary">
-        <Link to={`/issues/${item.slug}/`}>{item.title}</Link>
-      </Typography>
-      <Typography
-        variant="body1"
-        color="textSecondary"
-        style={{ textJustify: "justify" }}>
-        {item.description.length > 28
-          ? `${item.description.slice(0, 27).trim()}...`
-          : item.description}
-      </Typography>
+      {item.image !== "" ? (
+        <div>
+          <img width={350} height={105} src={item.image} alt="Problema" />
+        </div>
+      ) : (
+        <div>
+          <img width={350} height={105} src={DefaultImage} alt="Problema" />
+        </div>
+      )}
+      {item.title.length > 28 ? (
+        <Tooltip title={item.title} placement="bottom-start" arrow>
+          <Typography variant="h6" color="primary">
+            <Link to={`/issues/${item.slug}/`}>
+              {`${item.title.slice(0, 27).trim()}...`}
+            </Link>
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography variant="h6" color="primary">
+          <Link to={`/issues/${item.slug}/`}>{item.title}</Link>
+        </Typography>
+      )}
+      {item.description.length > 28 ? (
+        <Tooltip title={item.description} placement="bottom-start" arrow>
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            style={{ textJustify: "justify" }}>
+            {`${item.description.slice(0, 27).trim()}...`}
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography
+          variant="body1"
+          color="textSecondary"
+          style={{ textJustify: "justify" }}>
+          {item.description}
+        </Typography>
+      )}
       <Box className={classes.captionWrapper}>
         <Typography variant="caption" color="textSecondary">
           Em {item.created_at.slice(0, -3)}
