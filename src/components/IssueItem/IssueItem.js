@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import Box from "@material-ui/core/Box";
 // import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
@@ -24,12 +25,16 @@ import DefaultImage from "../../assets/defaultIssueImage.svg";
 const IssueItem = ({ item, handleUpdateItem }) => {
   const classes = useStyles();
 
+  const location = useLocation();
+
+  const isTablet = useMediaQuery({
+    query: "(min-width: 481px) and (max-width: 1124px)",
+  });
+
   const { isAnonymous, isAuthenticated, setAskForLoginVisible } =
     useContext(GlobalContext);
 
   const [rateLoading, setRateLoading] = useState(false);
-
-  const [image, setImage] = useState();
 
   const handleRate = async (upvote) => {
     if (
@@ -48,22 +53,42 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       }
     }
   };
+  console.log(location.pathname);
   return (
     <Box className={classes.listItem}>
       {item.image !== "" ? (
         <div>
-          <img width={350} height={105} src={item.image} alt="Problema" />
+          <img
+            className={
+              location.pathname !== `/issues/${item.slug}/`
+                ? classes.issueImage
+                : classes.issueBanner
+            }
+            src={item.image}
+            alt="Problema"
+          />
         </div>
       ) : (
         <div>
-          <img width={350} height={105} src={DefaultImage} alt="Problema" />
+          <img
+            className={
+              location.pathname !== `/issues/${item.slug}/`
+                ? classes.issueImage
+                : classes.issueBanner
+            }
+            src={DefaultImage}
+            alt="Problema"
+          />
         </div>
       )}
-      {item.title.length > 28 ? (
+      {item.title.length > 25 &&
+      location.pathname !== `/issues/${item.slug}/` ? (
         <Tooltip title={item.title} placement="bottom-start" arrow>
           <Typography variant="h6" color="primary">
             <Link to={`/issues/${item.slug}/`}>
-              {`${item.title.slice(0, 27).trim()}...`}
+              {isTablet
+                ? `${item.title.slice(0, 20).trim()}...`
+                : `${item.title.slice(0, 25).trim()}...`}
             </Link>
           </Typography>
         </Tooltip>
@@ -72,7 +97,8 @@ const IssueItem = ({ item, handleUpdateItem }) => {
           <Link to={`/issues/${item.slug}/`}>{item.title}</Link>
         </Typography>
       )}
-      {item.description.length > 28 ? (
+      {item.description.length > 28 &&
+      location.pathname !== `/issues/${item.slug}/` ? (
         <Tooltip title={item.description} placement="bottom-start" arrow>
           <Typography
             variant="body1"

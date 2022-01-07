@@ -100,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
   marginTop: {
     marginTop: theme.spacing(2),
   },
+  marginLeft: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 const FormComplementar = ({
@@ -310,15 +313,6 @@ const IssueForm = ({ callback }) => {
               </div>
               <Box className={classes.actionsWrapper}>
                 <Button
-                  variant="outlined"
-                  onClick={() => {
-                    setWizardStep(wizardStep - 1);
-                    setWizardLabel(labels[wizardStep - 1]);
-                  }}
-                  className={classes.marginRight}>
-                  Voltar
-                </Button>
-                <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
@@ -358,6 +352,15 @@ const IssueForm = ({ callback }) => {
 
               <Box className={classes.actionsWrapper}>
                 <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setWizardStep(wizardStep - 1);
+                    setWizardLabel(labels[wizardStep - 1]);
+                  }}
+                  className={classes.marginRight}>
+                  Voltar
+                </Button>
+                <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
@@ -379,21 +382,33 @@ const IssueForm = ({ callback }) => {
               <Typography variant="h6" color="textSecondary">
                 Está tudo certo?
               </Typography>
-              <Box className={classes.marginTop}>
-                <Typography variant="button" color="textSecondary">
-                  Título
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {formData.title}
-                </Typography>
-              </Box>
-              <Box className={classes.marginTop}>
-                <Typography variant="button" color="textSecondary">
-                  Descrição
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {formData.description}
-                </Typography>
+              <Box sx={{ display: "flex" }} className={classes.marginTop}>
+                <Box>
+                  <img
+                    width={150}
+                    height={130}
+                    src={formData.imageSrc}
+                    alt="Problema"
+                  />
+                </Box>
+                <Box className={classes.marginLeft}>
+                  <Box>
+                    <Typography variant="button" color="textSecondary">
+                      Título
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {formData.title}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.marginTop}>
+                    <Typography variant="button" color="textSecondary">
+                      Descrição
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {formData.description}
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
               <Box className={classes.actionsWrapper}>
                 <Button
