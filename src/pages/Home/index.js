@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ErrorMsg from "../../components/ErrorMsg";
 import IssueForm from "../../components/IssueForm";
 import IssueList from "./IssueList";
+import ScrollToTop from "../../components/FABScrollToTop/index";
 
 import IssuesService from "../../services/issues";
 import { GlobalContext } from "../../providers/GlobalProvider";
@@ -18,6 +21,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [page, setPage] = useState(1);
+  const [totalitems, setTotalItems] = useState();
 
   const { issueFormVisible, issues, setIssues } = useContext(GlobalContext);
   const classes = useStyles();
@@ -44,6 +48,7 @@ const Home = () => {
     try {
       setError(undefined);
       const issues = await IssuesService.getAllIssues(page);
+      setTotalItems(issues.count);
       if (issues)
         setIssues((prevIssues) => {
           return [...new Set([...prevIssues, ...issues.results])];
@@ -68,9 +73,11 @@ const Home = () => {
     });
     setIssues(auxIssues);
   };
-
   return (
     <>
+      <Box className={classes.fabWrapper}>
+        <ScrollToTop />
+      </Box>
       <NavBar />
       <main>
         {issueFormVisible ? (
@@ -99,11 +106,12 @@ const Home = () => {
                 handleUpdateItem={handleUpdateItem}
               />
             </Grid>
+            <Box className={classes.emptyBox}>
+              {issues.length !== totalitems ? <div id="sentinela"></div> : null}
+            </Box>
           </>
         )}
       </main>
-      <div id="sentinela"></div>
-
       <Footer />
     </>
   );

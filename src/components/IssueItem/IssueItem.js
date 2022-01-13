@@ -53,7 +53,6 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       }
     }
   };
-  console.log(location.pathname);
   return (
     <Box className={classes.listItem}>
       {item.image !== "" ? (
