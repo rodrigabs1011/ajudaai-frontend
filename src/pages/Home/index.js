@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import SearchBar from "../../components/SearchBar/index";
 
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -62,6 +63,40 @@ const Home = () => {
     }
   };
 
+  const searchIssues = async (description, startDate, endDate, page = 1) => {
+    try {
+      setError(undefined);
+      const issues = await IssuesService.getIssuesByDescriptionAndOrTime(
+        description,
+        startDate,
+        endDate,
+        page
+      );
+      setTotalItems(issues.count);
+
+      // if the page equals 1 turn the issues list empty first and
+      // then appennd the issues results to the list
+      if (page === 1) {
+        setIssues([]);
+      }
+
+      if (issues) {
+        setIssues((prevIssues) => {
+          return [...new Set([...prevIssues, ...issues.results])];
+        });
+      }
+
+      // if the search query has more results recursively do new requests
+      if (issues.next !== null) {
+        searchIssues(description, startDate, endDate, page + 1);
+      }
+
+      setError(false);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
   const handleUpdateItem = (data) => {
     const auxIssues = issues.map((issue) => {
       if (data.id === issue.id) {
@@ -98,6 +133,7 @@ const Home = () => {
                 ) : null}
               </Grid>
             </Grid>
+            <SearchBar searchIssues={searchIssues} />
             <Grid container className={classes.marginBottom}>
               <IssueList
                 data={issues}
