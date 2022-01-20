@@ -152,6 +152,12 @@ const FormComplementar = ({
                     color="primary">
                     {item.title}
                   </Typography>
+                  <Typography
+                    className={classes.relatedItemContent}
+                    variant="boby2"
+                    color="textSecondary">
+                    {item.description}
+                  </Typography>
                   <Divider />
                   {/* <IssueItem item={item} className={classes.similarIssueItem} /> */}
                 </Link>
