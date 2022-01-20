@@ -53,6 +53,28 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     marginTop: "13px",
   },
+  issueImage: {
+    [theme.breakpoints.between("xs", "sm")]: {
+      width: "290px",
+      height: "150px",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "260px",
+      height: "150px",
+    },
+    [theme.breakpoints.between("md", "lg")]: {
+      width: "260px",
+      height: "150px",
+    },
+    [theme.breakpoints.between("lg", "xl")]: {
+      width: "270px",
+      height: "150px",
+    },
+  },
+  issueBanner: {
+    width: "100%",
+    height: "150px",
+  },
 }));
 
 export default useStyles;

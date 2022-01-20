@@ -50,6 +50,22 @@ export class IssuesService {
     );
     return data;
   }
+
+  async getIssuesByDescriptionAndOrTime(description, startDate, endDate, page) {
+    if (description !== "") {
+      const { data } = await this.apiRef.get(
+        `/issues/?page=${page}&description=${description}&start_date=${startDate}&end_date=${endDate}`
+      );
+
+      return data;
+    }
+
+    const { data } = await this.apiRef.get(
+      `/issues/?page=${page}&start_date=${startDate}&end_date=${endDate}`
+    );
+
+    return data;
+  }
 }
 
 export default new IssuesService();

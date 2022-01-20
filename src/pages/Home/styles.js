@@ -25,6 +25,26 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
+  fabWrapper: {
+    position: "fixed",
+    zIndex: 20,
+    [theme.breakpoints.between("xs", "sm")]: {
+      right: "35px",
+      bottom: "30px",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      right: "50px",
+      bottom: "50px",
+    },
+    [theme.breakpoints.between("md", "lg")]: {
+      right: "50px",
+      bottom: "50px",
+    },
+    [theme.breakpoints.between("lg", "xl")]: {
+      right: "80px",
+      bottom: "50px",
+    },
+  },
 }));
 
 export default useStyles;
