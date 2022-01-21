@@ -30,7 +30,8 @@ const ScrollToTop = () => {
       aria-label="add"
       //   className={}
       onClick={scrollTop}
-      style={{ display: showScroll ? "flex" : "none" }}>
+      style={{ display: showScroll ? "flex" : "none" }}
+    >
       <UpIcon />
     </Fab>
   );

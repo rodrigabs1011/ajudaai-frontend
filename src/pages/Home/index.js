@@ -48,7 +48,7 @@ const Home = () => {
   const getIssues = async (page) => {
     try {
       setError(undefined);
-      const issues = await IssuesService.getAllIssues(page);
+      const issues = await IssuesService.getIssues(page);
       setTotalItems(issues.count);
       if (issues)
         setIssues((prevIssues) => {
