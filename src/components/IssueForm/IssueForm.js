@@ -18,7 +18,7 @@ import WizardSteps from "../WizardSteps";
 import ErrorMsg from "../ErrorMsg";
 import requestFormIllustration from "../../assets/requestFormIllustration.svg";
 
-const labels = ["Informações Iniciais", "A melhor Imagem", "Resumo"];
+const labels = ["A melhor Imagem", "Informações Iniciais", "Resumo"];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
   marginTop: {
     marginTop: theme.spacing(2),
   },
+  marginLeft: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 const FormComplementar = ({
@@ -152,6 +155,13 @@ const FormComplementar = ({
                   >
                     {item.title}
                   </Typography>
+                  <Typography
+                    className={classes.relatedItemContent}
+                    variant="boby2"
+                    color="textSecondary"
+                  >
+                    {item.description}
+                  </Typography>
                   <Divider />
                   {/* <IssueItem item={item} className={classes.similarIssueItem} /> */}
                 </Link>
@@ -189,7 +199,7 @@ const FormComplementar = ({
 const IssueForm = ({ callback }) => {
   const classes = useStyles();
   const { setIssueFormVisible } = useContext(GlobalContext);
-  const [wizardLabel, setWizardLabel] = useState("Informações Iniciais");
+  const [wizardLabel, setWizardLabel] = useState("A melhor Imagem");
   const [wizardStep, setWizardStep] = useState(0);
 
   const [formData, setFormData] = useState({
@@ -360,6 +370,46 @@ const IssueForm = ({ callback }) => {
               </div>
               <Box className={classes.actionsWrapper}>
                 <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setWizardStep(wizardStep + 1);
+                    setWizardLabel(labels[wizardStep + 1]);
+                  }}
+                >
+                  Próximo
+                </Button>
+              </Box>
+            </>
+          ) : null}
+          {wizardStep === 1 ? (
+            <>
+              <Typography variant="h6" color="textSecondary">
+                Conte-nos o que você encontrou!
+              </Typography>
+              <TextField
+                id="title"
+                name="title"
+                label="Título"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.title}
+                onChange={handleChange}
+              />
+              <TextField
+                id="description"
+                name="description"
+                label="Descrição"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.description}
+                onChange={handleChange}
+              />
+
+              <Box className={classes.actionsWrapper}>
+                <Button
                   variant="outlined"
                   onClick={() => {
                     setWizardStep(wizardStep - 1);
@@ -374,8 +424,13 @@ const IssueForm = ({ callback }) => {
                   color="primary"
                   onClick={() => {
                     setWizardStep(wizardStep + 1);
-                    setWizardLabel(labels[wizardStep + 1]);
+                    setWizardLabel(labels[1]);
+                    getSimilarIssues();
                   }}
+                  disabled={
+                    formData.title.length === 0 ||
+                    formData.description.length === 0
+                  }
                 >
                   Próximo
                 </Button>
@@ -387,21 +442,33 @@ const IssueForm = ({ callback }) => {
               <Typography variant="h6" color="textSecondary">
                 Está tudo certo?
               </Typography>
-              <Box className={classes.marginTop}>
-                <Typography variant="button" color="textSecondary">
-                  Título
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {formData.title}
-                </Typography>
-              </Box>
-              <Box className={classes.marginTop}>
-                <Typography variant="button" color="textSecondary">
-                  Descrição
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {formData.description}
-                </Typography>
+              <Box sx={{ display: "flex" }} className={classes.marginTop}>
+                <Box>
+                  <img
+                    width={150}
+                    height={130}
+                    src={formData.imageSrc}
+                    alt="Problema"
+                  />
+                </Box>
+                <Box className={classes.marginLeft}>
+                  <Box>
+                    <Typography variant="button" color="textSecondary">
+                      Título
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {formData.title}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.marginTop}>
+                    <Typography variant="button" color="textSecondary">
+                      Descrição
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {formData.description}
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
               <Box className={classes.actionsWrapper}>
                 <Button

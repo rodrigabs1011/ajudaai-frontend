@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import SearchBar from "../../components/SearchBar/index";
 
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ErrorMsg from "../../components/ErrorMsg";
 import IssueForm from "../../components/IssueForm";
 import IssueList from "./IssueList";
+import ScrollToTop from "../../components/FABScrollToTop/index";
 
 import IssuesService from "../../services/issues";
 import { GlobalContext } from "../../providers/GlobalProvider";
@@ -18,6 +22,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [page, setPage] = useState(1);
+  const [totalitems, setTotalItems] = useState();
 
   const { issueFormVisible, issues, setIssues } = useContext(GlobalContext);
   const classes = useStyles();
@@ -43,7 +48,8 @@ const Home = () => {
   const getIssues = async (page) => {
     try {
       setError(undefined);
-      const issues = await IssuesService.getIssues(page);
+      const issues = await IssuesService.getAllIssues(page);
+      setTotalItems(issues.count);
       if (issues)
         setIssues((prevIssues) => {
           return [...new Set([...prevIssues, ...issues.results])];
@@ -54,6 +60,40 @@ const Home = () => {
       setError(e.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const searchIssues = async (description, startDate, endDate, page = 1) => {
+    try {
+      setError(undefined);
+      const issues = await IssuesService.getIssuesByDescriptionAndOrTime(
+        description,
+        startDate,
+        endDate,
+        page
+      );
+      setTotalItems(issues.count);
+
+      // if the page equals 1 turn the issues list empty first and
+      // then appennd the issues results to the list
+      if (page === 1) {
+        setIssues([]);
+      }
+
+      if (issues) {
+        setIssues((prevIssues) => {
+          return [...new Set([...prevIssues, ...issues.results])];
+        });
+      }
+
+      // if the search query has more results recursively do new requests
+      if (issues.next !== null) {
+        searchIssues(description, startDate, endDate, page + 1);
+      }
+
+      setError(false);
+    } catch (e) {
+      setError(e.message);
     }
   };
 
@@ -68,9 +108,11 @@ const Home = () => {
     });
     setIssues(auxIssues);
   };
-
   return (
     <>
+      <Box className={classes.fabWrapper}>
+        <ScrollToTop />
+      </Box>
       <NavBar />
       <main>
         {issueFormVisible ? (
@@ -91,6 +133,7 @@ const Home = () => {
                 ) : null}
               </Grid>
             </Grid>
+            <SearchBar searchIssues={searchIssues} />
             <Grid container className={classes.marginBottom}>
               <IssueList
                 data={issues}
@@ -99,11 +142,12 @@ const Home = () => {
                 handleUpdateItem={handleUpdateItem}
               />
             </Grid>
+            <Box className={classes.emptyBox}>
+              {issues.length !== totalitems ? <div id="sentinela"></div> : null}
+            </Box>
           </>
         )}
       </main>
-      <div id="sentinela"></div>
-
       <Footer />
     </>
   );

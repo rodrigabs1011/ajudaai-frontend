@@ -25,7 +25,7 @@ export class IssuesService {
   async getSimilarIssues(payload) {
     // const { data } = await this.apiRef.get(`/issues/findRelated/?description=${payload.description}`);
     // const { data } = await this.apiRef.post(`/issues/findRelated/`, payload);
-    const { data } = await this.apiRef.get(`/issues/`);
+    const { data } = await this.apiRef.post(`/issues/search/`, payload);
     return data.results.slice(0, 3);
   }
 
@@ -46,6 +46,22 @@ export class IssuesService {
     const { data } = await this.apiRef.get(
       `/issues/${slug}/comments/?token=${get_or_create_token()}`
     );
+    return data;
+  }
+
+  async getIssuesByDescriptionAndOrTime(description, startDate, endDate, page) {
+    if (description !== "") {
+      const { data } = await this.apiRef.get(
+        `/issues/?page=${page}&description=${description}&start_date=${startDate}&end_date=${endDate}`
+      );
+
+      return data;
+    }
+
+    const { data } = await this.apiRef.get(
+      `/issues/?page=${page}&start_date=${startDate}&end_date=${endDate}`
+    );
+
     return data;
   }
 }
