@@ -23,6 +23,7 @@ const SearchBar = ({ searchIssues }) => {
         size="medium"
         inputRef={descriptionRef}
         className={classes.searchBarTextFiel}
+        margin="dense"
       />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
@@ -34,6 +35,7 @@ const SearchBar = ({ searchIssues }) => {
           label="De"
           autoOk
           className={classes.searchBarItem}
+          margin="dense"
         />
         <DatePicker
           value={endDate}
@@ -44,6 +46,7 @@ const SearchBar = ({ searchIssues }) => {
           label="Até"
           autoOk
           className={classes.searchBarItem}
+          margin="dense"
         />
       </MuiPickersUtilsProvider>
       <Button
@@ -56,7 +59,6 @@ const SearchBar = ({ searchIssues }) => {
         }
         color="primary"
         variant="contained"
-        size="large"
         startIcon={<SearchIcon />}>
         Pesquisar
       </Button>
