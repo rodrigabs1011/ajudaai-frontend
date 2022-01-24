@@ -35,8 +35,7 @@ const Downvoted = ({ item, handleRate, rateLoading }) => {
       onClick={() => {
         handleRate(true);
       }}
-      disabled={rateLoading}
-    >
+      disabled={rateLoading}>
       <CloseIcon className={classes.relevanceIcon} />
       <Typography variant="button" color="textSecondary">
         {item.upvotes - item.downvotes}

@@ -50,10 +50,9 @@ const AskForLogin = (props) => {
 
   const handleSignUp = async () => {
     try {
-      console.log(name);
       setNameError(undefined);
       setNameLoading(true);
-      const data = await AuthService.signUp({ name });
+      const data = await AuthService.fastSignUp({ name });
       localStorage.setItem("AJUDAAI-SESSION-TOKEN", data.token);
       setIsAuthenticated(true);
       setAskForLoginVisible(false);
@@ -72,15 +71,13 @@ const AskForLogin = (props) => {
     <Dialog
       open={askForLoginVisible}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-    >
+      aria-labelledby="alert-dialog-title">
       <form>
         <DialogContent>
           <Typography
             variant="body1"
             color="textSecondary"
-            className={classes.dialogSubtitle}
-          >
+            className={classes.dialogSubtitle}>
             Entrar
           </Typography>
           <TextField
@@ -119,8 +116,7 @@ const AskForLogin = (props) => {
             fullWidth
             onClick={handleLogin}
             disabled={loginError || loginLoading ? true : false}
-            className={classes.dialogSubmit}
-          >
+            className={classes.dialogSubmit}>
             Entrar
           </Button>
 
@@ -129,8 +125,7 @@ const AskForLogin = (props) => {
           <Typography
             variant="body1"
             color="textSecondary"
-            className={classes.dialogSubtitle}
-          >
+            className={classes.dialogSubtitle}>
             Criar Conta
           </Typography>
           <TextField
@@ -153,8 +148,7 @@ const AskForLogin = (props) => {
             fullWidth
             className={classes.dialogSubmit}
             disabled={nameLoading || nameError ? true : false}
-            onClick={handleSignUp}
-          >
+            onClick={handleSignUp}>
             Criar Conta
           </Button>
         </DialogContent>

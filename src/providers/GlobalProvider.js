@@ -20,8 +20,7 @@ const GlobalProvider = (props) => {
         setIsAuthenticated,
         askForLoginVisible,
         setAskForLoginVisible,
-      }}
-    >
+      }}>
       {props.children}
     </GlobalContext.Provider>
   );

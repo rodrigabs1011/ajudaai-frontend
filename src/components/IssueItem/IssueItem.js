@@ -59,8 +59,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
       <Typography
         variant="body1"
         color="textSecondary"
-        style={{ textJustify: "justify" }}
-      >
+        style={{ textJustify: "justify" }}>
         {item.description.length > 28
           ? `${item.description.slice(0, 27).trim()}...`
           : item.description}
@@ -112,8 +111,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
           <Typography
             variant="body1"
             color="textSecondary"
-            style={{ textJustify: "justify" }}
-          >
+            style={{ textJustify: "justify" }}>
             {`${item.description.slice(0, 27).trim()}...`}
           </Typography>
         </Tooltip>
@@ -121,8 +119,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
         <Typography
           variant="body1"
           color="textSecondary"
-          style={{ textJustify: "justify" }}
-        >
+          style={{ textJustify: "justify" }}>
           {item.description}
         </Typography>
       )}

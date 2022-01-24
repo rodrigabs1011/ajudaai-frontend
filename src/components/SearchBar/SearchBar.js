@@ -59,8 +59,7 @@ const SearchBar = ({ searchIssues }) => {
         }
         color="primary"
         variant="contained"
-        startIcon={<SearchIcon />}
-      >
+        startIcon={<SearchIcon />}>
         Pesquisar
       </Button>
     </Grid>

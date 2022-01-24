@@ -20,6 +20,11 @@ export class AuthService {
     const { data } = await this.apiRef.post(`/token-auth/`, payload);
     return data;
   }
+
+  async fastSignUp(payload) {
+    const { data } = await this.apiRef.post(`/token-anon/`, payload);
+    return data;
+  }
 }
 
 export default new AuthService();

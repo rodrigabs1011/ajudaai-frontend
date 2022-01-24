@@ -52,8 +52,7 @@ const NavBar = () => {
           spacing={2}
           direction="row"
           justifyContent="space-between"
-          alignItems="center"
-        >
+          alignItems="center">
           {issueFormVisible ? (
             <>
               <IconButton onClick={closeIssueForm}>
@@ -83,8 +82,7 @@ const NavBar = () => {
                   variant="contained"
                   color="primary"
                   onClick={openIssueForm}
-                  endIcon={<MarkunreadMailboxIcon />}
-                >
+                  endIcon={<MarkunreadMailboxIcon />}>
                   POSTAR
                 </Button>
               </div>
