@@ -53,17 +53,6 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   };
   return (
     <Box className={classes.listItem}>
-      <Typography variant="h6" color="primary">
-        <Link to={`/issues/${item.slug}/`}>{item.title}</Link>
-      </Typography>
-      <Typography
-        variant="body1"
-        color="textSecondary"
-        style={{ textJustify: "justify" }}>
-        {item.description.length > 28
-          ? `${item.description.slice(0, 27).trim()}...`
-          : item.description}
-      </Typography>
       {item.image !== "" ? (
         <div>
           <img
