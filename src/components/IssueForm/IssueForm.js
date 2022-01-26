@@ -152,6 +152,12 @@ const FormComplementar = ({
                     color="primary">
                     {item.title}
                   </Typography>
+                  <Typography
+                    className={classes.relatedItemContent}
+                    variant="boby2"
+                    color="textSecondary">
+                    {item.description}
+                  </Typography>
                   <Divider />
                   {/* <IssueItem item={item} className={classes.similarIssueItem} /> */}
                 </Link>
@@ -248,10 +254,9 @@ const IssueForm = ({ callback }) => {
         )
       ) {
         const auxFormData = { ...formData };
-        auxFormData.image = acceptedFiles[0];
         var reader = new FileReader();
         reader.onload = function (e) {
-          auxFormData.imageSrc = e.target.result;
+          auxFormData.image = e.target.result;
           setFormData(auxFormData);
         };
         reader.readAsDataURL(acceptedFiles[0]);
@@ -291,10 +296,10 @@ const IssueForm = ({ callback }) => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}>
-                {formData.imageSrc ? (
+                {formData.image ? (
                   <img
                     width={100}
-                    src={formData.imageSrc}
+                    src={formData.image}
                     alt={formData.description}
                   />
                 ) : (
@@ -387,7 +392,7 @@ const IssueForm = ({ callback }) => {
                   <img
                     width={150}
                     height={130}
-                    src={formData.imageSrc}
+                    src={formData.image}
                     alt="Problema"
                   />
                 </Box>
