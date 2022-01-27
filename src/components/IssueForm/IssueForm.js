@@ -244,32 +244,34 @@ const IssueForm = ({ callback }) => {
     }
   };
 
-  const onDrop = (acceptedFiles) => {
-    setFormImageError(undefined);
-    if (acceptedFiles.length === 1) {
-      const fileName = acceptedFiles[0].name;
-      if (
-        ["svg", "png", "jpeg", "jpg", "gif"].includes(
-          fileName.split(".").at(-1).toLowerCase()
-        )
-      ) {
-        const auxFormData = { ...formData };
-        console.log(auxFormData);
-        auxFormData.image = acceptedFiles[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          auxFormData.imageSrc = e.target.result;
-          setFormData(auxFormData);
-        };
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setFormImageError(undefined);
+      if (acceptedFiles.length === 1) {
+        const fileName = acceptedFiles[0].name;
+        if (
+          ["svg", "png", "jpeg", "jpg", "gif"].includes(
+            fileName.split(".").at(-1).toLowerCase()
+          )
+        ) {
+          const auxFormData = { ...formData };
+          auxFormData.image = acceptedFiles[0];
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            auxFormData.imageSrc = e.target.result;
+            setFormData(auxFormData);
+          };
 
-        reader.readAsDataURL(acceptedFiles[0]);
+          reader.readAsDataURL(acceptedFiles[0]);
+        } else {
+          setFormImageError("Tipo de arquivo inválido");
+        }
       } else {
-        setFormImageError("Tipo de arquivo inválido");
+        setFormImageError("Apenas um arquivo de imagem permitido!");
       }
-    } else {
-      setFormImageError("Apenas um arquivo de imagem permitido!");
-    }
-  };
+    },
+    [formData]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -401,7 +403,6 @@ const IssueForm = ({ callback }) => {
                   />
                 </Box>
                 <Box className={classes.marginLeft}>
-                  <Box>{JSON.stringify(formData)}</Box>
                   <Box>
                     <Typography variant="button" color="textSecondary">
                       Título
