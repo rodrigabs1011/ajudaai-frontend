@@ -29,16 +29,12 @@ export function get_or_create_token() {
   return localStorage.getItem("AJUDAAI-CLIENT-TOKEN");
 }
 
-export function handleAskForLogin({
-  isAnonymous,
-  isAuthenticated,
-  setAskForLoginVisible,
-}) {
-  if (!isAnonymous && !isAuthenticated) {
-    setAskForLoginVisible(true);
-    return false;
+export function handleAskForLogin({ isAuthenticated, setAskForLoginVisible }) {
+  if (isAuthenticated) {
+    return true;
   }
-  return true;
+  setAskForLoginVisible(true);
+  return false;
 }
 
 export const defaultAnimDuration = ".4s";

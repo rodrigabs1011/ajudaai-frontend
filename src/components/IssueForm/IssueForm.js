@@ -244,29 +244,34 @@ const IssueForm = ({ callback }) => {
     }
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFormImageError(undefined);
-    if (acceptedFiles.length === 1) {
-      const fileName = acceptedFiles[0].name;
-      if (
-        ["svg", "png", "jpeg", "jpg", "gif"].includes(
-          fileName.split(".").at(-1).toLowerCase()
-        )
-      ) {
-        const auxFormData = { ...formData };
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          auxFormData.image = e.target.result;
-          setFormData(auxFormData);
-        };
-        reader.readAsDataURL(acceptedFiles[0]);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setFormImageError(undefined);
+      if (acceptedFiles.length === 1) {
+        const fileName = acceptedFiles[0].name;
+        if (
+          ["svg", "png", "jpeg", "jpg", "gif"].includes(
+            fileName.split(".").at(-1).toLowerCase()
+          )
+        ) {
+          const auxFormData = { ...formData };
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            auxFormData.image = e.target.result;
+            setFormData(auxFormData);
+          };
+
+          reader.readAsDataURL(acceptedFiles[0]);
+        } else {
+          setFormImageError("Tipo de arquivo inválido");
+        }
       } else {
-        setFormImageError("Tipo de arquivo inválido");
+        setFormImageError("Apenas um arquivo de imagem permitido!");
       }
-    } else {
-      setFormImageError("Apenas um arquivo de imagem permitido!");
-    } // eslint-disable-next-line
-  }, []);
+    },
+    [formData]
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
@@ -280,6 +285,50 @@ const IssueForm = ({ callback }) => {
         <form className={classes.form} onSubmit={handleSubmit}>
           <ErrorMsg error={formError} />
           {wizardStep === 0 ? (
+            <>
+              <Typography variant="h6" color="textSecondary">
+                Conte-nos o que você encontrou!
+              </Typography>
+              <TextField
+                id="title"
+                name="title"
+                label="Título"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.title}
+                onChange={handleChange}
+              />
+              <TextField
+                id="description"
+                name="description"
+                label="Descrição"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                value={formData.description}
+                onChange={handleChange}
+              />
+
+              <Box className={classes.actionsWrapper}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setWizardStep(wizardStep + 1);
+                    setWizardLabel(labels[1]);
+                    getSimilarIssues();
+                  }}
+                  disabled={
+                    formData.title.length === 0 ||
+                    formData.description.length === 0
+                  }>
+                  Próximo
+                </Button>
+              </Box>
+            </>
+          ) : null}
+          {wizardStep === 1 ? (
             <>
               <Typography variant="h6" color="textSecondary">
                 Você tem uma imagem?
@@ -318,45 +367,6 @@ const IssueForm = ({ callback }) => {
               </div>
               <Box className={classes.actionsWrapper}>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setWizardStep(wizardStep + 1);
-                    setWizardLabel(labels[wizardStep + 1]);
-                  }}>
-                  Próximo
-                </Button>
-              </Box>
-            </>
-          ) : null}
-          {wizardStep === 1 ? (
-            <>
-              <Typography variant="h6" color="textSecondary">
-                Conte-nos o que você encontrou!
-              </Typography>
-              <TextField
-                id="title"
-                name="title"
-                label="Título"
-                variant="outlined"
-                margin="dense"
-                fullWidth
-                value={formData.title}
-                onChange={handleChange}
-              />
-              <TextField
-                id="description"
-                name="description"
-                label="Descrição"
-                variant="outlined"
-                margin="dense"
-                fullWidth
-                value={formData.description}
-                onChange={handleChange}
-              />
-
-              <Box className={classes.actionsWrapper}>
-                <Button
                   variant="outlined"
                   onClick={() => {
                     setWizardStep(wizardStep - 1);
@@ -370,13 +380,8 @@ const IssueForm = ({ callback }) => {
                   color="primary"
                   onClick={() => {
                     setWizardStep(wizardStep + 1);
-                    setWizardLabel(labels[1]);
-                    getSimilarIssues();
-                  }}
-                  disabled={
-                    formData.title.length === 0 ||
-                    formData.description.length === 0
-                  }>
+                    setWizardLabel(labels[wizardStep + 1]);
+                  }}>
                   Próximo
                 </Button>
               </Box>

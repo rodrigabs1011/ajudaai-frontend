@@ -37,9 +37,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   const [rateLoading, setRateLoading] = useState(false);
 
   const handleRate = async (upvote) => {
-    if (
-      handleAskForLogin({ isAnonymous, isAuthenticated, setAskForLoginVisible })
-    ) {
+    if (handleAskForLogin({ isAuthenticated, setAskForLoginVisible })) {
       try {
         setRateLoading(true);
         const data = await IssuesService.rateIssue(item.slug, upvote);

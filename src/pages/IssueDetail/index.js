@@ -21,7 +21,7 @@ import serverDown from "../../assets/serverDown.svg";
 
 const IssueDetail = () => {
   const { slug } = useParams();
-  const [issue, setIssue] = useState();
+  const [issue, setIssue] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
@@ -42,8 +42,8 @@ const IssueDetail = () => {
   const getIssue = async () => {
     try {
       setLoading(true);
-      const issue = await IssuesService.getIssueBySlug(slug);
-      if (issue) setIssue(issue);
+      const data = await IssuesService.getIssueBySlug(slug);
+      if (data) setIssue(data);
     } catch (e) {
       setError(e.message);
     } finally {
