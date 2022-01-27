@@ -12,7 +12,7 @@ export class AuthService {
   }
 
   async signin(payload) {
-    const { data } = await this.apiRef.post(`/token-auth/`, payload);
+    const { data } = await this.apiRef.post(`/ajudaai/token/login`, payload);
     return data;
   }
 }
