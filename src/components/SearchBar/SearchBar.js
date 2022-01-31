@@ -22,7 +22,7 @@ const SearchBar = ({ searchIssues }) => {
   const [endDate, setEndDate] = useState();
   const [startDate, setStartDate] = useState();
   const [open, setOpen] = useState(false);
-  
+
   const descriptionRef = useRef("");
 
   const classes = useStyles();
