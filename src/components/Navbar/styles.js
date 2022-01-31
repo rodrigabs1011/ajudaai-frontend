@@ -19,16 +19,16 @@ const useStyles = makeStyles((theme) => ({
   nav: {
     padding: "34px 89px",
     [theme.breakpoints.between("xs", "sm")]: {
-      padding: "34px 45px",
+      padding: "34px 20px",
     },
     [theme.breakpoints.between("sm", "md")]: {
-      padding: "34px 89px",
+      padding: "34px 25px",
     },
     [theme.breakpoints.between("md", "lg")]: {
-      padding: "34px 89px",
+      padding: "34px 80px",
     },
     [theme.breakpoints.between("lg", "xl")]: {
-      padding: "34px 89px",
+      padding: "34px 40px",
     },
   },
   brandWrapper: {

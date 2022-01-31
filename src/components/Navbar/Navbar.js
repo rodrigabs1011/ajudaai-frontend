@@ -11,10 +11,11 @@ import MarkunreadMailboxIcon from "@material-ui/icons/MarkunreadMailbox";
 
 import Logout from "../Logout";
 import { GlobalContext } from "../../providers/GlobalProvider";
+import SearchBar from "../../components/SearchBar/index";
 
 import useStyles from "./styles";
 
-const NavBar = () => {
+const NavBar = ({ searchIssues }) => {
   const classes = useStyles();
   const { issueFormVisible, setIssueFormVisible, isAuthenticated } =
     useContext(GlobalContext);
@@ -75,7 +76,7 @@ const NavBar = () => {
                   AJUDA AÍ
                 </Typography>
               </Link>
-
+              <SearchBar searchIssues={searchIssues} />
               <div className={classes.row}>
                 <ul className={classes.navList}>{navLinks}</ul>
                 <Button
