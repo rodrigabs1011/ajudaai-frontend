@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -14,11 +14,12 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
 
-const NavBar = () => {
+const NavBar = ({ reRender }) => {
   const classes = useStyles();
-  const { issueFormVisible, setIssueFormVisible, isAuthenticated } =
+  const { issueFormVisible, setIssueFormVisible, isAuthenticated, setIssues } =
     useContext(GlobalContext);
 
+  const location = useLocation();
   const closeIssueForm = () => {
     setIssueFormVisible(false);
   };
@@ -69,12 +70,28 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <Link to="/" className={classes.brandWrapper}>
-                {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
-                <Typography variant="h2" className={classes.brandText}>
-                  AJUDA AÍ
-                </Typography>
-              </Link>
+              {location.pathname !== "/" ? (
+                <Link
+                  to="/"
+                  className={classes.brandWrapper}
+                  onClick={() => setIssues([])}>
+                  {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
+                  <Typography variant="h2" className={classes.brandText}>
+                    AJUDA AÍ
+                  </Typography>
+                </Link>
+              ) : (
+                <Button
+                  disableRipple
+                  style={{ backgroundColor: "transparent" }}
+                  onClick={() => reRender(1)}
+                  className={classes.brandWrapper}>
+                  {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
+                  <Typography variant="h2" className={classes.brandText}>
+                    AJUDA AÍ
+                  </Typography>
+                </Button>
+              )}
 
               <div className={classes.row}>
                 <ul className={classes.navList}>{navLinks}</ul>
