@@ -53,7 +53,7 @@ const IssueItem = ({ item, handleUpdateItem }) => {
   };
   return (
     <Box className={classes.listItem}>
-      {item.image !== "" ? (
+      {item.image !== null && item.image !== "" ? (
         <div>
           <img
             className={

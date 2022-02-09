@@ -283,7 +283,10 @@ const IssueForm = ({ callback }) => {
           <WizardSteps steps={3} current={wizardStep} label={wizardLabel} />
         </Box>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <ErrorMsg error={formError} />
+          <ErrorMsg
+            error={formError}
+            message="Problema de conexão com o servidor"
+          />
           {wizardStep === 0 ? (
             <>
               <Typography variant="h6" color="textSecondary">
@@ -333,7 +336,10 @@ const IssueForm = ({ callback }) => {
               <Typography variant="h6" color="textSecondary">
                 Você tem uma imagem?
               </Typography>
-              <ErrorMsg error={formImageError} />
+              <ErrorMsg
+                error={formImageError}
+                message="Problema de conexão com o servidor"
+              />
               <div
                 {...getRootProps()}
                 style={{

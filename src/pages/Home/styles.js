@@ -15,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
   errorMessage: {
     marginBottom: theme.spacing(3),
   },
+  errorWrapper: {
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
   row: {
     display: "flex",
     flexWrap: "wrap",
