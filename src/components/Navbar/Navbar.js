@@ -14,7 +14,7 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 
 import useStyles from "./styles";
 
-const NavBar = () => {
+const NavBar = ({ error }) => {
   const classes = useStyles();
   const { issueFormVisible, setIssueFormVisible, isAuthenticated } =
     useContext(GlobalContext);
@@ -82,7 +82,8 @@ const NavBar = () => {
                   variant="contained"
                   color="primary"
                   onClick={openIssueForm}
-                  endIcon={<MarkunreadMailboxIcon />}>
+                  endIcon={<MarkunreadMailboxIcon />}
+                  disabled={error}>
                   POSTAR
                 </Button>
               </div>

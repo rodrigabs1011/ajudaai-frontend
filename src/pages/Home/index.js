@@ -113,7 +113,7 @@ const Home = () => {
       <Box className={classes.fabWrapper}>
         <ScrollToTop />
       </Box>
-      <NavBar />
+      <NavBar error={error} />
       <main>
         {issueFormVisible ? (
           <IssueForm callback={getIssues} />
