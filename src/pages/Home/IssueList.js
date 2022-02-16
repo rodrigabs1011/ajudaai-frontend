@@ -7,6 +7,7 @@ import IssueItem from "../../components/IssueItem";
 import HomeSkeleton from "./skeletons";
 import useStyles from "./styles";
 import empty from "../../assets/empty.svg";
+import ErrorComponent from "../../components/ErrorComponent";
 
 const IssueList = (props) => {
   const classes = useStyles();
@@ -35,13 +36,12 @@ const IssueList = (props) => {
   return (
     <Grid item md={6} lg={6} xl={6}>
       <Box className={classes.emptyBox}>
-        <Typography
-          variant="h6"
-          color="primary"
-          className={classes.marginBottom}>
-          Nenhum ajuda aí por aqui!
-        </Typography>
-        <img src={empty} alt="Nenhum(a)" width="50%" />
+        <ErrorComponent
+          message="Desculpe não há registro de problemas
+                    no período solicitado."
+          image={empty}
+          alt="Nenhum(a) problema encontrado"
+        />
       </Box>
     </Grid>
   );
