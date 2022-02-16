@@ -51,7 +51,7 @@ const Login = () => {
         alignItems="center"
         justifyContent="center">
         <Grid item xl={6} lg={6}>
-          <ErrorMsg error={error} />
+          <ErrorMsg error={error} message="Usuário ou Senha inválido(a)" />
         </Grid>
         <Grid item xl={6} lg={6}>
           <Typography variant="h6" color="textPrimary">

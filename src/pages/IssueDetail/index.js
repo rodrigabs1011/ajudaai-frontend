@@ -10,6 +10,7 @@ import NavBar from "../../components/Navbar";
 import ErrorMsg from "../../components/ErrorMsg";
 import IssueForm from "../../components/IssueForm";
 import IssueItem from "../../components/IssueItem";
+import ErrorComponent from "../../components/ErrorComponent";
 
 import IssuesService from "../../services/issues";
 // import CommentsService from "../../services/comments";
@@ -21,7 +22,7 @@ import serverDown from "../../assets/serverDown.svg";
 
 const IssueDetail = () => {
   const { slug } = useParams();
-  const [issue, setIssue] = useState();
+  const [issue, setIssue] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
@@ -42,8 +43,8 @@ const IssueDetail = () => {
   const getIssue = async () => {
     try {
       setLoading(true);
-      const issue = await IssuesService.getIssueBySlug(slug);
-      if (issue) setIssue(issue);
+      const data = await IssuesService.getIssueBySlug(slug);
+      if (data) setIssue(data);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -103,17 +104,12 @@ const IssueDetail = () => {
         ) : (
           <>
             <Grid container direction="column" alignItems="center">
-              <Grid item>
-                <ErrorMsg error={error} className={classes.errorMessage} />
-              </Grid>
               {error ? (
-                <Grid item sm={12} lg={6} xl={6}>
-                  <img
-                    src={serverDown}
-                    alt="Erro ao comunicar-se com o servidor."
-                    width="100%"
-                  />
-                </Grid>
+                <ErrorComponent
+                  message="Erro ao comunicar-se com o servidor."
+                  image={serverDown}
+                  alt="Erro ao comunicar-se com o servidor"
+                />
               ) : null}
             </Grid>
             {loading ? (

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,11 +15,12 @@ import SearchBar from "../../components/SearchBar/index";
 
 import useStyles from "./styles";
 
-const NavBar = ({ searchIssues }) => {
+const NavBar = ({ reRender, error, searchIssues }) => {
   const classes = useStyles();
-  const { issueFormVisible, setIssueFormVisible, isAuthenticated } =
+  const { issueFormVisible, setIssueFormVisible, isAuthenticated, setIssues } =
     useContext(GlobalContext);
 
+  const location = useLocation();
   const closeIssueForm = () => {
     setIssueFormVisible(false);
   };
@@ -70,12 +71,28 @@ const NavBar = ({ searchIssues }) => {
             </>
           ) : (
             <>
-              <Link to="/" className={classes.brandWrapper}>
-                {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
-                <Typography variant="h2" className={classes.brandText}>
-                  AJUDA AÍ
-                </Typography>
-              </Link>
+              {location.pathname !== "/" ? (
+                <Link
+                  to="/"
+                  className={classes.brandWrapper}
+                  onClick={() => setIssues([])}>
+                  {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
+                  <Typography variant="h2" className={classes.brandText}>
+                    AJUDA AÍ
+                  </Typography>
+                </Link>
+              ) : (
+                <Button
+                  disableRipple
+                  style={{ backgroundColor: "transparent" }}
+                  onClick={() => reRender(1)}
+                  className={classes.brandWrapper}>
+                  {/* <img className={classes.brandImage} src={infinity} alt="Logo" /> */}
+                  <Typography variant="h2" className={classes.brandText}>
+                    AJUDA AÍ
+                  </Typography>
+                </Button>
+              )}
               <SearchBar searchIssues={searchIssues} />
               <div className={classes.row}>
                 <ul className={classes.navList}>{navLinks}</ul>
@@ -83,7 +100,8 @@ const NavBar = ({ searchIssues }) => {
                   variant="contained"
                   color="primary"
                   onClick={openIssueForm}
-                  endIcon={<MarkunreadMailboxIcon />}>
+                  endIcon={<MarkunreadMailboxIcon />}
+                  disabled={error}>
                   POSTAR
                 </Button>
               </div>

@@ -244,30 +244,34 @@ const IssueForm = ({ callback }) => {
     }
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFormImageError(undefined);
-    if (acceptedFiles.length === 1) {
-      const fileName = acceptedFiles[0].name;
-      if (
-        ["svg", "png", "jpeg", "jpg", "gif"].includes(
-          fileName.split(".").at(-1).toLowerCase()
-        )
-      ) {
-        const auxFormData = { ...formData };
-        auxFormData.image = acceptedFiles[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          auxFormData.imageSrc = e.target.result;
-          setFormData(auxFormData);
-        };
-        reader.readAsDataURL(acceptedFiles[0]);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setFormImageError(undefined);
+      if (acceptedFiles.length === 1) {
+        const fileName = acceptedFiles[0].name;
+        if (
+          ["svg", "png", "jpeg", "jpg", "gif"].includes(
+            fileName.split(".").at(-1).toLowerCase()
+          )
+        ) {
+          const auxFormData = { ...formData };
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            auxFormData.image = e.target.result;
+            setFormData(auxFormData);
+          };
+
+          reader.readAsDataURL(acceptedFiles[0]);
+        } else {
+          setFormImageError("Tipo de arquivo inválido");
+        }
       } else {
-        setFormImageError("Tipo de arquivo inválido");
+        setFormImageError("Apenas um arquivo de imagem permitido!");
       }
-    } else {
-      setFormImageError("Apenas um arquivo de imagem permitido!");
-    } // eslint-disable-next-line
-  }, []);
+    },
+    [formData]
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
@@ -279,58 +283,11 @@ const IssueForm = ({ callback }) => {
           <WizardSteps steps={3} current={wizardStep} label={wizardLabel} />
         </Box>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <ErrorMsg error={formError} />
+          <ErrorMsg
+            error={formError}
+            message="Problema de conexão com o servidor"
+          />
           {wizardStep === 0 ? (
-            <>
-              <Typography variant="h6" color="textSecondary">
-                Você tem uma imagem?
-              </Typography>
-              <ErrorMsg error={formImageError} />
-              <div
-                {...getRootProps()}
-                style={{
-                  border: "solid 1px #0000001f",
-                  borderRadius: "4px",
-                  padding: "16px 8px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}>
-                {formData.imageSrc ? (
-                  <img
-                    width={100}
-                    src={formData.imageSrc}
-                    alt={formData.description}
-                  />
-                ) : (
-                  <Typography variant="caption" color="textSecondary">
-                    <PublishIcon fontSize="large" />
-                  </Typography>
-                )}
-                <input {...getInputProps()} />
-                {isDragActive ? (
-                  <p>Solte a imagem aqui!</p>
-                ) : (
-                  <p>
-                    Clique para selecionar ou arraste e solte sua imagem aqui!
-                  </p>
-                )}
-              </div>
-              <Box className={classes.actionsWrapper}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setWizardStep(wizardStep + 1);
-                    setWizardLabel(labels[wizardStep + 1]);
-                  }}>
-                  Próximo
-                </Button>
-              </Box>
-            </>
-          ) : null}
-          {wizardStep === 1 ? (
             <>
               <Typography variant="h6" color="textSecondary">
                 Conte-nos o que você encontrou!
@@ -358,15 +315,6 @@ const IssueForm = ({ callback }) => {
 
               <Box className={classes.actionsWrapper}>
                 <Button
-                  variant="outlined"
-                  onClick={() => {
-                    setWizardStep(wizardStep - 1);
-                    setWizardLabel(labels[wizardStep - 1]);
-                  }}
-                  className={classes.marginRight}>
-                  Voltar
-                </Button>
-                <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
@@ -383,6 +331,68 @@ const IssueForm = ({ callback }) => {
               </Box>
             </>
           ) : null}
+          {wizardStep === 1 ? (
+            <>
+              <Typography variant="h6" color="textSecondary">
+                Você tem uma imagem?
+              </Typography>
+              <ErrorMsg
+                error={formImageError}
+                message="Problema de conexão com o servidor"
+              />
+              <div
+                {...getRootProps()}
+                style={{
+                  border: "solid 1px #0000001f",
+                  borderRadius: "4px",
+                  padding: "16px 8px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                {formData.image ? (
+                  <img
+                    width={100}
+                    src={formData.image}
+                    alt={formData.description}
+                  />
+                ) : (
+                  <Typography variant="caption" color="textSecondary">
+                    <PublishIcon fontSize="large" />
+                  </Typography>
+                )}
+                <input {...getInputProps()} />
+                {isDragActive ? (
+                  <p>Solte a imagem aqui!</p>
+                ) : (
+                  <p>
+                    Clique para selecionar ou arraste e solte sua imagem aqui!
+                  </p>
+                )}
+              </div>
+              <Box className={classes.actionsWrapper}>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setWizardStep(wizardStep - 1);
+                    setWizardLabel(labels[wizardStep - 1]);
+                  }}
+                  className={classes.marginRight}>
+                  Voltar
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setWizardStep(wizardStep + 1);
+                    setWizardLabel(labels[wizardStep + 1]);
+                  }}>
+                  Próximo
+                </Button>
+              </Box>
+            </>
+          ) : null}
           {wizardStep === 2 ? (
             <Box>
               <Typography variant="h6" color="textSecondary">
@@ -393,7 +403,7 @@ const IssueForm = ({ callback }) => {
                   <img
                     width={150}
                     height={130}
-                    src={formData.imageSrc}
+                    src={formData.image}
                     alt="Problema"
                   />
                 </Box>

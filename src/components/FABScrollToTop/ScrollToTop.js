@@ -28,7 +28,6 @@ const ScrollToTop = () => {
       size="medium"
       color="primary"
       aria-label="add"
-      //   className={}
       onClick={scrollTop}
       style={{ display: showScroll ? "flex" : "none" }}>
       <UpIcon />
