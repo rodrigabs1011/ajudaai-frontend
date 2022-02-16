@@ -17,33 +17,23 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 import useStyles from "./styles";
 
 import serverDown from "../../assets/serverDown.svg";
+import { useInView } from "react-intersection-observer";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  const [page, setPage] = useState(1);
   const [totalitems, setTotalItems] = useState();
+  const [page, setPage] = useState(1);
 
   const { issueFormVisible, issues, setIssues } = useContext(GlobalContext);
+  const { ref, inView, entry } = useInView({ trackVisibility: true });
+
   const classes = useStyles();
 
   useEffect(() => {
+    setPage((currentPageInsideState) => currentPageInsideState + 1);
     getIssues(page); //eslint-disable-next-line
-  }, [page]);
-
-  useEffect(() => {
-    // Observe the sentinel element, when it's finded
-    // change the page's value to do a new request
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        setPage((currentPageInsideState) => currentPageInsideState + 1);
-      }
-    });
-
-    intersectionObserver.observe(document.querySelector("#sentinela"));
-
-    return () => intersectionObserver.disconnect();
-  }, []);
+  }, [inView, ref]);
 
   const getIssues = async (page) => {
     try {
@@ -63,6 +53,12 @@ const Home = () => {
     }
   };
 
+  const reRender = (page) => {
+    setIssues([]);
+    getIssues(page);
+    setPage(page + 1);
+  };
+
   const searchIssues = async (description, startDate, endDate, page = 1) => {
     try {
       setError(undefined);
@@ -73,7 +69,6 @@ const Home = () => {
         page
       );
       setTotalItems(issues.count);
-
       // if the page equals 1 turn the issues list empty first and
       // then appennd the issues results to the list
       if (page === 1) {
@@ -113,7 +108,7 @@ const Home = () => {
       <Box className={classes.fabWrapper}>
         <ScrollToTop />
       </Box>
-      <NavBar error={error} />
+      <NavBar reRender={reRender} error={error} />
       <main>
         {issueFormVisible ? (
           <IssueForm callback={getIssues} />
@@ -143,7 +138,7 @@ const Home = () => {
               />
             </Grid>
             <Box className={classes.emptyBox}>
-              {issues.length !== totalitems ? <div id="sentinela"></div> : null}
+              {issues.length !== totalitems ? <div ref={ref}></div> : null}
             </Box>
           </>
         )}
