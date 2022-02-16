@@ -6,7 +6,7 @@ import SearchBar from "../../components/SearchBar/index";
 
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import ErrorMsg from "../../components/ErrorMsg";
+import ErrorComponent from "../../components/ErrorComponent";
 import IssueForm from "../../components/IssueForm";
 import IssueList from "./IssueList";
 import ScrollToTop from "../../components/FABScrollToTop/index";
@@ -108,28 +108,28 @@ const Home = () => {
       <Box className={classes.fabWrapper}>
         <ScrollToTop />
       </Box>
-      <NavBar reRender={reRender} />
+      <NavBar reRender={reRender} error={error} />
       <main>
         {issueFormVisible ? (
           <IssueForm callback={getIssues} />
         ) : (
           <>
             <Grid container direction="column" alignItems="center">
-              <Grid item>
-                <ErrorMsg error={error} className={classes.errorMessage} />
-              </Grid>
-              <Grid item sm={12} lg={6} xl={6}>
+              <Grid className={classes.errorWrapper} sm={12} lg={6} xl={6}>
                 {error ? (
-                  <img
-                    src={serverDown}
-                    alt="Erro ao comunicar-se com o servidor."
-                    width="100%"
+                  <ErrorComponent
+                    message="Erro ao comunicar-se com o servidor."
+                    image={serverDown}
+                    alt="Erro ao comunicar-se com o servidor"
                   />
                 ) : null}
               </Grid>
             </Grid>
             <SearchBar searchIssues={searchIssues} />
-            <Grid container className={classes.marginBottom}>
+            <Grid
+              container
+              justifyContent="center"
+              className={classes.marginBottom}>
               <IssueList
                 data={issues}
                 loading={loading}

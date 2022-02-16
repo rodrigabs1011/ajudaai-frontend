@@ -109,7 +109,7 @@ const AskForLogin = (props) => {
             variant="outlined"
             disabled={loginLoading}
           />
-          <ErrorMsg error={loginError} />
+          <ErrorMsg error={loginError} message="Usuário ou Senha inválido(a)" />
           <Button
             variant="contained"
             color="primary"
@@ -141,7 +141,7 @@ const AskForLogin = (props) => {
             fullWidth
             variant="outlined"
           />
-          <ErrorMsg error={nameError} />
+          <ErrorMsg error={nameError} message="Nome de usuário inválido" />
           <Button
             variant="outlined"
             color="primary"

@@ -33,7 +33,7 @@ const Downvoted = ({ item, handleRate, rateLoading }) => {
     <Button
       className={classes.relevance}
       onClick={() => {
-        handleRate(true);
+        handleRate(false);
       }}
       disabled={rateLoading}>
       <CloseIcon className={classes.relevanceIcon} />
