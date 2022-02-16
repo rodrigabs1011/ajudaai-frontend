@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import SearchBar from "../../components/SearchBar/index";
 
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -108,7 +107,7 @@ const Home = () => {
       <Box className={classes.fabWrapper}>
         <ScrollToTop />
       </Box>
-      <NavBar reRender={reRender} error={error} />
+      <NavBar searchIssues={searchIssues} getIssues={getIssues} reRender={reRender} error={error} />
       <main>
         {issueFormVisible ? (
           <IssueForm callback={getIssues} />
